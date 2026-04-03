@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HW Solutions – Homework Solution at Your Doorstep</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f5ee;
+    --bg2: #ffffff;
+    --bg3: #f0ece1;
+    --text: #1a1611;
+    --text2: #5a5040;
+    --text3: #9a8c78;
+    --accent: #c84b11;
+    --accent2: #e8650a;
+    --accent3: #ffeedd;
+    --green: #1a6b3c;
+    --green-bg: #e6f5ec;
+    --border: rgba(26,22,17,0.12);
+    --border2: rgba(26,22,17,0.06);
+    --shadow: 0 4px 24px rgba(26,22,17,0.08);
+    --shadow2: 0 2px 8px rgba(26,22,17,0.06);
+    --radius: 14px;
+    --radius2: 8px;
+    --font: 'Sora', sans-serif;
+    --serif: 'DM Serif Display', serif;
+    --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+  }
+  [data-theme="dark"] {
+    --bg: #12100d;
+    --bg2: #1c1915;
+    --bg3: #231f1a;
+    --text: #f5f0e8;
+    --text2: #b8a990;
+    --text3: #7a6e60;
+    --accent: #f06530;
+    --accent2: #ff8045;
+    --accent3: #2a1a0f;
+    --green: #4ade80;
+    --green-bg: #0a2318;
+    --border: rgba(245,240,232,0.1);
+    --border2: rgba(245,240,232,0.05);
+    --shadow: 0 4px 24px rgba(0,0,0,0.3);
+    --shadow2: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+  }
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  /* ====== NAVBAR ====== */
+  .navbar {
+    position: fixed; top:0; left:0; right:0; z-index: 1000;
+    background: rgba(248,245,238,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border2);
+    transition: background var(--transition);
+  }
+  [data-theme="dark"] .navbar { background: rgba(18,16,13,0.92); }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 24px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .logo-img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .logo:hover .logo-img { transform: scale(1.06); }
+  .logo-sub { font-size: 10px; color: var(--text3); display: block; margin-top: -2px; }
+  .nav-links {
+    display: flex; align-items: center; gap: 6px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px; color: var(--text2); text-decoration: none;
+    padding: 7px 14px; border-radius: var(--radius2);
+    transition: color var(--transition), background var(--transition);
+    cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--accent); background: var(--accent3); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .btn-theme {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition);
+    color: var(--text);
+  }
+  .btn-theme:hover { background: var(--accent3); border-color: var(--accent); }
+  .btn { 
+    padding: 8px 20px; border-radius: var(--radius2);
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    border: none; transition: all var(--transition); font-family: var(--font);
+    text-decoration: none;
+  }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent3); }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+  .btn-green { background: var(--green); color: white; }
+  .btn-green:hover { opacity: 0.9; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all var(--transition); }
+
+  /* ====== HERO ====== */
+  .hero {
+    padding: 120px 24px 80px;
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent3); color: var(--accent);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+    padding: 5px 12px; border-radius: 999px;
+    border: 1px solid rgba(200,75,17,0.2);
+    margin-bottom: 20px;
+  }
+  .hero-badge::before { content:'●'; font-size: 8px; }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .hero h1 em { color: var(--accent); font-style: italic; }
+  .hero p { font-size: 16px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; max-width: 440px; }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-btns .btn { padding: 12px 24px; font-size: 15px; }
+  .hero-visual {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .card-stack { display: flex; flex-direction: column; gap: 12px; }
+  .service-card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .service-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: var(--accent3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .service-card h4 { font-size: 14px; font-weight: 600; color: var(--text); }
+  .service-card p { font-size: 12px; color: var(--text3); }
+  .price-tag {
+    margin-left: auto; background: var(--accent);
+    color: white; font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 999px; white-space: nowrap; flex-shrink: 0;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 16px;
+  }
+  .stat-box {
+    background: var(--bg3); border-radius: var(--radius2);
+    padding: 12px; text-align: center;
+  }
+  .stat-box strong { font-size: 20px; color: var(--accent); display: block; font-family: var(--serif); }
+  .stat-box span { font-size: 11px; color: var(--text3); }
+
+  /* ====== SECTION COMMON ====== */
+  section { padding: 80px 24px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 42px);
+    color: var(--text); margin-bottom: 14px; line-height: 1.2;
+  }
+  .section-sub { font-size: 16px; color: var(--text2); max-width: 520px; margin-bottom: 48px; }
+
+  /* ====== SERVICES ====== */
+  #services { background: var(--bg2); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .s-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all var(--transition);
+  }
+  .s-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent); }
+  .s-icon { font-size: 28px; margin-bottom: 14px; }
+  .s-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .s-card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+  /* ====== PRICING ====== */
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .p-card {
+    background: var(--bg2); border: 2px solid var(--border);
+    border-radius: 20px; padding: 32px; position: relative;
+    transition: all var(--transition);
+  }
+  .p-card.featured { border-color: var(--accent); }
+  .p-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .p-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: white; font-size: 11px; font-weight: 600;
+    padding: 4px 14px; border-radius: 999px; white-space: nowrap;
+  }
+  .p-type { font-size: 13px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .p-price { font-family: var(--serif); font-size: 46px; color: var(--text); line-height: 1; }
+  .p-price span { font-size: 22px; }
+  .p-desc { font-size: 14px; color: var(--text2); margin: 12px 0 20px; }
+  .p-features { list-style: none; }
+  .p-features li { font-size: 14px; color: var(--text2); padding: 7px 0; border-bottom: 1px solid var(--border2); display: flex; align-items: center; gap: 8px; }
+  .p-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .p-features li:last-child { border-bottom: none; }
+
+  /* ====== TIMING BANNER ====== */
+  .timing-banner {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 28px;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .timing-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+  .timing-text strong { font-size: 16px; font-weight: 600; }
+  .timing-text span { font-size: 14px; color: var(--text2); display: block; }
+
+  /* ====== ABOUT ====== */
+  #about { background: var(--bg); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .about-img-box {
+    background: var(--bg2);
+    border-radius: 20px; padding: 32px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .about-avatar { font-size: 64px; margin-bottom: 16px; }
+  .about-img-box h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px; }
+  .about-img-box p { font-size: 14px; color: var(--text2); line-height: 1.7; }
+  .about-quote {
+    margin-top: 20px; background: var(--accent3);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px; border-radius: 0 var(--radius2) var(--radius2) 0;
+    font-size: 14px; color: var(--text2); font-style: italic;
+  }
+  .team-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .chip {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 999px; padding: 5px 14px; font-size: 13px; color: var(--text2);
+  }
+
+  /* ====== HOW IT WORKS ====== */
+  #howitworks { background: var(--bg2); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; }
+  .step { text-align: center; }
+  .step-num {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-size: 20px; font-weight: 700; font-family: var(--serif);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .step h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .step p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+  /* ====== CONTACT ====== */
+  #contact { background: var(--bg); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  .contact-info { }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 18px; background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 14px;
+  }
+  .c-icon { font-size: 20px; flex-shrink: 0; }
+  .contact-item h4 { font-size: 13px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
+  .contact-item a, .contact-item p { font-size: 15px; color: var(--text); text-decoration: none; }
+  .contact-form-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 28px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { font-size: 13px; font-weight: 500; color: var(--text2); display: block; margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 10px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius2); font-family: var(--font);
+    font-size: 14px; color: var(--text);
+    transition: border-color var(--transition);
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+
+  /* ====== FOOTER ====== */
+  footer {
+    background: var(--text);
+    color: white; padding: 48px 24px 24px;
+  }
+  [data-theme="dark"] footer { background: var(--bg3); }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.6); margin-top: 12px; max-width: 280px; line-height: 1.7; }
+  .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+  .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.75); text-decoration: none; margin-bottom: 8px; cursor: pointer; transition: color var(--transition); }
+  .footer-col a:hover { color: var(--accent2); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+  /* ====== MODALS ====== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 9000; display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--bg2); border-radius: 20px;
+    width: 100%; max-width: 480px; max-height: 90vh;
+    overflow-y: auto; position: relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+    animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .modal.wide { max-width: 680px; }
+  @keyframes modalIn { from { transform: scale(0.9) translateY(20px); opacity:0; } to { transform: scale(1) translateY(0); opacity:1; } }
+  .modal-header {
+    padding: 24px 24px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .modal-header h2 { font-family: var(--serif); font-size: 24px; }
+  .modal-close {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--bg);
+    cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
+    color: var(--text2); transition: all var(--transition);
+  }
+  .modal-close:hover { background: var(--accent3); color: var(--accent); border-color: var(--accent); }
+  .modal-body { padding: 0 24px 24px; }
+  .tab-btns { display: flex; background: var(--bg); border-radius: var(--radius2); padding: 4px; margin-bottom: 24px; }
+  .tab-btn {
+    flex: 1; padding: 8px; border-radius: 6px;
+    border: none; background: transparent;
+    font-family: var(--font); font-size: 14px; font-weight: 500;
+    color: var(--text2); cursor: pointer; transition: all var(--transition);
+  }
+  .tab-btn.active { background: var(--bg2); color: var(--accent); box-shadow: var(--shadow2); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .auth-divider { text-align: center; margin: 16px 0; color: var(--text3); font-size: 13px; }
+  .error-msg { background: #fee; border: 1px solid #fcc; color: #c00; border-radius: var(--radius2); padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: none; }
+  .success-msg { background: var(--green-bg); border: 1px solid #c3e6cb; color: var(--green); border-radius: var(--radius2); padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: none; }
+
+  /* ====== DASHBOARD ====== */
+  .dashboard-page {
+    display: none; padding-top: 64px; min-height: 100vh; background: var(--bg);
+  }
+  .dashboard-page.active { display: block; }
+  .dash-header {
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 24px; 
+  }
+  .dash-header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .dash-user { display: flex; align-items: center; gap: 14px; }
+  .user-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; font-family: var(--serif);
+  }
+  .user-name { font-size: 16px; font-weight: 600; }
+  .user-email { font-size: 13px; color: var(--text3); }
+  .dash-main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  .dash-grid { display: grid; grid-template-columns: 260px 1fr; gap: 24px; }
+  .dash-sidebar { }
+  .dash-nav { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .dash-nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 18px; font-size: 14px; font-weight: 500;
+    color: var(--text2); cursor: pointer; border-left: 3px solid transparent;
+    transition: all var(--transition);
+  }
+  .dash-nav-item:hover { background: var(--bg3); color: var(--text); }
+  .dash-nav-item.active { background: var(--accent3); color: var(--accent); border-left-color: var(--accent); }
+  .dash-content { }
+  .dash-panel { display: none; }
+  .dash-panel.active { display: block; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px;
+  }
+  .stat-card .s-val { font-family: var(--serif); font-size: 28px; color: var(--accent); }
+  .stat-card .s-label { font-size: 12px; color: var(--text3); margin-top: 4px; }
+  .orders-table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .orders-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .orders-table th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); background: var(--bg3); }
+  .orders-table td { padding: 13px 16px; border-bottom: 1px solid var(--border2); color: var(--text); }
+  .orders-table tr:last-child td { border-bottom: none; }
+  .status-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 500;
+  }
+  .status-pending { background: #fef3c7; color: #92400e; }
+  .status-processing { background: #dbeafe; color: #1e40af; }
+  .status-done { background: var(--green-bg); color: var(--green); }
+  .status-delivered { background: #f0fdf4; color: #166534; }
+  [data-theme="dark"] .status-pending { background: #451a03; color: #fcd34d; }
+  [data-theme="dark"] .status-processing { background: #1e3a5f; color: #93c5fd; }
+  [data-theme="dark"] .status-done { background: #052e16; color: #4ade80; }
+  .track-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+  }
+  .track-steps { position: relative; padding-left: 32px; }
+  .track-steps::before { content:''; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .track-step { position: relative; margin-bottom: 24px; }
+  .track-step::before {
+    content:''; position: absolute; left: -23px; top: 4px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--border); border: 2px solid var(--bg2);
+  }
+  .track-step.done::before { background: var(--green); }
+  .track-step.active::before { background: var(--accent); }
+  .track-step h5 { font-size: 14px; font-weight: 600; }
+  .track-step p { font-size: 13px; color: var(--text3); }
+  .no-orders { text-align: center; padding: 48px; color: var(--text3); }
+  .no-orders .big { font-size: 40px; margin-bottom: 12px; }
+
+  /* ====== ORDER MODAL ====== */
+  .order-form .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pincode-check { display: flex; gap: 8px; }
+  .pincode-check input { flex: 1; }
+  .pincode-result { font-size: 13px; margin-top: 6px; padding: 8px 12px; border-radius: var(--radius2); display: none; }
+  .pincode-ok { background: var(--green-bg); color: var(--green); }
+  .pincode-fail { background: #fee; color: #c00; }
+  .price-summary {
+    background: var(--bg3); border-radius: var(--radius);
+    padding: 16px; margin: 16px 0;
+  }
+  .price-row { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; }
+  .price-row.total { font-weight: 700; font-size: 16px; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; }
+
+  /* ====== PAYMENT MODAL ====== */
+  .payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .pay-method {
+    border: 2px solid var(--border); border-radius: var(--radius);
+    padding: 14px; cursor: pointer; transition: all var(--transition);
+    text-align: center; font-size: 13px; font-weight: 500;
+  }
+  .pay-method:hover { border-color: var(--accent); background: var(--accent3); }
+  .pay-method.selected { border-color: var(--accent); background: var(--accent3); color: var(--accent); }
+  .upi-box {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px; text-align: center;
+    margin: 16px 0;
+  }
+  .upi-id { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: 0.5px; }
+  .upi-hint { font-size: 12px; color: var(--text3); margin-top: 4px; }
+  .qr-box { width: 100px; height: 100px; background: white; border-radius: 8px; margin: 12px auto; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #333; border: 1px solid #eee; }
+  .payment-note { font-size: 12px; color: var(--text3); background: var(--bg3); padding: 10px 14px; border-radius: var(--radius2); line-height: 1.6; }
+
+  /* ====== TERMS ====== */
+  .terms-body { font-size: 14px; color: var(--text2); line-height: 1.8; }
+  .terms-body h3 { font-size: 16px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .terms-body p { margin-bottom: 12px; }
+  .terms-body .warning { background: #fff3cd; border: 1px solid #ffc107; border-radius: var(--radius2); padding: 12px; margin: 16px 0; color: #856404; font-weight: 500; }
+  [data-theme="dark"] .terms-body .warning { background: #2a2000; color: #ffc107; border-color: #664d00; }
+
+  /* ====== TOAST ====== */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 99999;
+    background: var(--text); color: white;
+    padding: 12px 20px; border-radius: var(--radius);
+    font-size: 14px; box-shadow: var(--shadow);
+    transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    max-width: 320px;
+  }
+  .toast.show { transform: translateX(0); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: #c00; }
+
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .dash-grid { grid-template-columns: 1fr; }
+    .order-form .order-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 16px; flex-direction: column; gap: 4px; z-index: 999; }
+    .nav-links.open { display: flex; }
+    .nav-links a { display: block; padding: 10px 16px; }
+    .hamburger { display: flex; }
+    .hero { padding: 100px 20px 60px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .section-sub { font-size: 15px; }
+    .payment-methods { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: repeat(3,1fr); gap: 8px; }
+  }
+  @media (max-width: 480px) {
+    section { padding: 60px 16px; }
+    .nav-inner { padding: 0 16px; }
+    .modal { border-radius: 16px; margin: 8px; }
+    .orders-table { font-size: 12px; }
+    .orders-table th, .orders-table td { padding: 10px 10px; }
+    .hero h1 { font-size: 32px; }
+  }
+
+  /* ====== MISC ====== */
+  .main-site { transition: opacity 0.3s; }
+  .alert-banner {
+    background: var(--accent3); border-bottom: 1px solid rgba(200,75,17,0.15);
+    padding: 8px 24px; text-align: center; font-size: 13px; color: var(--accent);
+    font-weight: 500;
+  }
+  .section-divider { width: 48px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 20px; }
+  .badge-new {
+    display: inline-block; background: #fef3c7; color: #b45309;
+    font-size: 10px; font-weight: 700; padding: 2px 7px;
+    border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .review-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px;
+  }
+  .review-stars { color: #f59e0b; font-size: 14px; margin-bottom: 10px; }
+  .review-text { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+  .reviewer { font-size: 13px; font-weight: 600; color: var(--text); }
+  .reviewer-sub { font-size: 12px; color: var(--text3); }
+
+  /* ====== SCROLL ANIMATIONS ====== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal-scale.visible { opacity: 1; transform: scale(1); }
+  /* Stagger delays */
+  .delay-1 { transition-delay: 0.1s !important; }
+  .delay-2 { transition-delay: 0.2s !important; }
+  .delay-3 { transition-delay: 0.3s !important; }
+  .delay-4 { transition-delay: 0.4s !important; }
+  .delay-5 { transition-delay: 0.5s !important; }
+  .delay-6 { transition-delay: 0.6s !important; }
+
+  /* Hero entrance */
+  .hero-content { opacity: 0; transform: translateY(28px); animation: heroIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.1s forwards; }
+  .hero-visual { opacity: 0; transform: translateX(32px) scale(0.97); animation: heroVisualIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s forwards; }
+  @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
+  @keyframes heroVisualIn { to { opacity: 1; transform: translateX(0) scale(1); } }
+
+  /* Navbar scroll effect */
+  .navbar.scrolled {
+    box-shadow: 0 2px 20px rgba(26,22,17,0.10);
+    border-bottom-color: var(--border);
+  }
+  [data-theme="dark"] .navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+
+  /* Nav link active indicator */
+  .nav-links a.nav-active { color: var(--accent); background: var(--accent3); }
+
+  /* Alert banner slide in */
+  .alert-banner { animation: slideDown 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+  @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* Service cards hover lift */
+  .s-card { transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease; }
+  
+  /* Smooth page transition */
+  .main-site { animation: pageFadeIn 0.5s cubic-bezier(0.22,1,0.36,1); }
+  .dashboard-page.active { animation: pageFadeIn 0.4s cubic-bezier(0.22,1,0.36,1); }
+  @keyframes pageFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Mobile nav slide */
+  .nav-links { transition: none; }
+  @media (max-width: 768px) {
+    .nav-links {
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease;
+    }
+    .nav-links.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  /* Step number pop */
+  .step-num {
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+  }
+  .step:hover .step-num { transform: scale(1.15); box-shadow: 0 8px 24px rgba(200,75,17,0.3); }
+
+  /* Pricing card featured pulse border */
+  .p-card.featured { animation: borderPulse 3s ease-in-out infinite; }
+  @keyframes borderPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(200,75,17,0.0); } 50% { box-shadow: 0 0 0 4px rgba(200,75,17,0.12); } }
+
+  /* Stat box counter */
+  .stat-box strong, .s-val { display: block; }
+
+  /* Smooth underline on logo sub */
+  .logo-sub { transition: color var(--transition); }
+
+  /* Review card hover */
+  .review-card { transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
+  .review-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+
+  /* Button ripple */
+  .btn-primary, .btn-green {
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::after, .btn-green::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .btn-primary:hover::after, .btn-green:hover::after { transform: scaleX(1); }
+
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ALERT BANNER -->
+<div class="alert-banner">⏰ Support available 9 AM – 7 PM &nbsp;|&nbsp; 📦 Delivery within Mumbai only &nbsp;|&nbsp; 💳 UPI: 8252600663@ptyes</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="logo" onclick="goHome()">
+      <img class="logo-img" src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAfQB9ADASIAAhEBAxEB/8QAHQABAAICAwEBAAAAAAAAAAAAAAcIBgkDBAUCAf/EAGEQAQABAwMBBAMGDgwIDAUFAAABAgMEBQYRBwgSITETQVEUIjdhcYEWFxgyQlVWdZGUsbPR0hUzUmJydIKTobLB0yM4Q3ODkpXCJzU2RFNUZHajtMTxJITh4vAlNEVlov/EABwBAQEBAQEBAQEBAAAAAAAAAAABAgMGBQQHCP/EADcRAQABAwEEBggGAgMBAAAAAAABAgMRBAUhMZESExVBUqEGFCJRYbHR4TJCY3GBwSOSM0PwYv/aAAwDAQACEQMRAD8AuWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+a7lFETNddNMR58zwjzrb1S0np1oVdddy1f1a9RPuXGmqPCeJ4rr8eYp8Pn8oUiyN+b53XuvI1ynXcq1HPeuVV3Jm3NPjMUdyfD1zEURHHrny8Qu5quua9ubdVzSNs36MTS9PmYz8+Yqq5uTETTao4mOZiJ5qnyjmPX4Pb0nVMvT9Rs6bqWVTl0XfeW8in118/WzHqmPllWvp71sy9N0DI0HGv413Jt+9s13Y59FMzHeuxEfttMRMzNHM1euJqjmKZZ6faVfz7mDbw83Iy8e3d90ZWZcuc1XqpmKpqnxnzn1eziI8IBMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACOOt/VXR+nGiVTcu2b2r3qOcfGmqPexPhFyuOeYp58Pjnwh+9cOqeldOdCqqqqoyNXv08YuNHE93mJ4rrjmPe8x8sz4QgbYWytY3rreRvvf965Yo71V7nJp4jGjwmmaomYj0vHPFHHdoieZ8fCA8zY+zde6jbryN170v3beNTdm9cqzKPeWY8Zp71MzxNfEx3bcxxTEc1ecROJ9b917WzdQs6btLC9DpGn01UXcrmecu7PEzVM8+PHE8T6+avle31u6u4+q4VW1NpU04e37UzTVeorq72Xz5+U/WzMTzM+NXhzxEzzA97InKvU0xNcxxHHdmOI448Y8efKfH2fJwD6u38i/m+6MSuq3cprpqoqpqmmqmrjjmJ8fi8f/adi3Z1yczO6S6Pnajgzi5l+mqbtU08TfmKpiLvH76IifZ7FX+y50aq3XrFvW9Yx/wD9ExKu9dmqf2+5Hh6KJjx49cz83rXgs2rdi1RZs26bduiIppppjiKYj1RAPsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgXWbqRpvT/b9d6uu3e1S9Txi481R5z4RXV4x72J/C7fVfqBpGwdv15+ddt1ZVdMxj2O9xNc+2fZH/wCQr/srQ9Q3hruR1G31lVWcS3dpuWqaq+5FuYjmmO7/ANJ4U8RPHcjxn33HdDj6d7N1DdmuX+onUHIrt2Ka/T2qb9U/4KYq5ieJnj0kRE8R9bbieZ994U4d1z6s3tyUTt3b1XuTbtiZtzFm5PGXxMc8+PM0c+PM+NXMzPg6vX7q5VrVqNE0S57l0GxT6K1RRX/+5iK/X64o5iJ5n6+fGfDhCFN+5eiartE01XJ59HPjHPHhzHr8+Ofi/AHYycm9kXKp79VVfM00UzPMzxz/AEz4JY7PnSTP3/rNNd6L9nSrNznLvTHERT4+9pjnzq8vw+p5nQ/phqe+9y0Y+PPocXzyMmKOfR0c8zPq+OIj1r77I0PQ9t6FRomgWbdrGxa5orinxmbnETVNU+ufH+wwO/oel4Oi6Ri6VptimxiYtuLdq3T6qYd0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGLdSt76Rsfb9zU9Su0+kmJixZ70RNyr1fN7Zc3UPd+l7L27e1fU65nuxMWbVMc1Xa+OeI/ShHb+2NW6obmr3DumjuYlv3tymvj/AOGq8JizbonmO/THjVVVE92Z4iIqiZBi+g6Xm9RNayt/b7yL+NpFquivHt1UfYzxNuKYmfGuqe53KYp9fen7HmO+t3U/9mqp0/T/AEeLoOFzj2bNurmLkcz72J5nvc8R3q/s55+xie9IPbD12zt63pe3sW57lwKbM3PQ25n30eHNMR4e+q5mJqnmeKfV3quasU+7NQve68umiummJps2pjmKY9cxx5+HE8x+QCfS5WRdzcyaPS3a57tPh3aI+P1R6v8A6M/6RdPNU3zuWzg4GLFyqr3/AKWrwotUePNdUx6vZx5+Tg6ZbK1be+4cbTtNxa79VURMzVT7ymjn66Z9kefK2uu6ptzoPsi3oOhUWsvceXb701VcTVz5eluevuxPPEev8L9Gl0t3VXYtWozMu1ixXfuRbtxmZcW+twaN0X2RY2ftKuivXb9Heu3pjvVUc+d2rn1zPPdp8o+SPHP+gGPdsdJdFuZFddy/k03cm7XXPNVc3LtVXMz8kwpnqObmapqF7UNQyLmTlX65ru3bk81VTK9+xsL9jdlaHp808TjafYtVR8cW6Yn+l6bbez7ezdBbsU76qpzM+/EfKMvvbV0NGg0dFuPxVTmZ/aPlveyA8i82AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPM3PreJoGjZOpZcV1U2Lc1+jojmqrj2R7PbPqd3NyrGHYm9kXKbdEe2fOfZHtn4kEdXLGv7s161Y0HOi5RNE2rlnvxars0zzM12bnnFfERzTPNNXlPxBXrql1G1vqZvm1i4XNMWrveppqmareLHhxExHxxx8fP4Pc3x1r3Rg6XkbdzLH7G6dVfquUXdLtRTcvxcnveimuavDxmffcd6fOeWR7r2Xtbb+27UYt/C0rUqae5dyO5TZt5tceM0VURE+iu+yife1czwrHq9eRq+s+hv036KbFyrmmuO7VMRzHrj66Yj/3B39xarrG9tep1vXsyvIt0U027VqquZi3RHd4tU8+PrnxnmZnz5nz9vZO1dS3XrdjTdKxL96/dqp9HVRHFMczzMTzHhHtn4vldfae3LuvZWNp+HhzVcqr9FFFqiZrq8uKY8Pi81ytnaFtjoN0/jVtZps3dZvUcUW6Ij0ldUx+10fJ658vD8PS1arvVxbtxmZ4Q3bt1XKooojMy/MejbfZ+6fWrc02s/cmXRNNMR53KvP5rdM/h/JW3WtU1DXNWyNV1XJryczIr79y5XPnPsj2RHqj1O7vfc2pbw3Nk67qtUemvTEUW6frbVEfW0U/FH5eZ9by7dL+qbF2RRs2zv31zxn+o+Hzf0PY+yqdJRmfxTx+jvbfwZ1DW8DAiJmcnJt2YiP31UR/av/ERERERxEeEQpR0Uwfd3VTbtnjnu5lN7+bibn+6uu8x6Y3elet0e6JnnP2fH9LasXbVv3RM85+wA8c8iAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgvtKdarGycC9omh3onV6qeL9+I5pxomOYpjwnmuYny9UePsBi/an6hYdnWa9sWsuzN23bpot3IuRVYtXK499TfomPVHdmKqZ71P9E9K1q2HsvQLFOr6jezZmii5GVVem53YrnuxVFcfX2e949+PGnyr585gTCt3rczuvclM+lrj0ti3XEzPHMTzPNHE1Tz6/GJ4+bGLuv39Sz6cKurIjDirm13aOJsfW+NMccePMTMeET4c8+sJ+31oGR1Gqpz9Nu27mVVaii5cm33rd61HFUU3OI4njn3tcczHtYzf2XhaxH0O049eJquJMY1F2uqIr73Ez6C/MRxMzHe9HfiIivxifJ6PR2rN21ZsY8WpyLedR7prqpmJs+iiPG7Znu+VPlctTxVTx3o5iZWO25trQtOsTvnclrFxoxrVVybtfERVRM8x3/DiqIniaI8eJnw9S00zVOI4rETM4hi/S3Zmh9HdjXt57nx6adUi1xTR4TXTFXlbpj91M+f/ugnqDvDV977huatqt2ePGnHsRPvLFvnwpj+2fW9brJ1Bzd+7mrvU13LWkY1U0YWPM8RFP7uqP3U/wBHkwu3S/qGwNiRoLfW3Y/yT5R7vq95sXZMaanrK49ufL4P23S7Ful826XYt0vu11PW2bSU+y7g+6eqNu/3efcmFevc+znij/fWuV37I2F3tW17UJp/ase1Zif4dVUz/UhYh/MfSa709fMe6Ij+/wC3859K6+ltGafDER5Z/sAefebAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARd1/6sab040Cqim9Zq1bIon0NFU+FqOPr6o+Xyj1/IDze0d1gxNg6Jf0zS79q5r1+3xHNUcY1M+Hen9948xHz/AC080zT8jOqq3jueuqYir0lq1eiZmJmqJm5VHHEzPe8P/Zz6fRm7nz7u7t1ZE+5ZvTeopu1TNy9XE0+/r5+u9UxHHyeUMJ31ua/rWoVY2P3qce1EUWqeOfKOOY8I8/yA6u6ddu6/m1WYqmLFFcURRERHeiImOZ449Ufle3sLaOo7g1bG0vSsWvIvZNXcppojiap8PDn2cePLzNk7dzdb1Oxh42Jdvekrim3FqmZmurmfeUx4+MTPHP8A+TdjZG3tvdAunVeuaz6C5uTLs92i14TM1cRxao48eOfGqf8A6OtmzXeri3bjMzwbt26rlUU0xmZc+1unmxumml4M7x3JZjK7sZNWJdu0xai5T9lbp478+c0zx4VeHMeCK+t3VDJ3zqMafpvpMXb+LVxYs/WzemPK5XH5I9XysF3Rr2q7o13I1nWcmcjLvz4z9jRHqppj1Ux6odG3S/puyPRyzoJi9cnpV+Uft9Xttl7Fo09UXK99XlD6t0ue3S/LdLnt0vvV1PWWbT6t0uxbpfNul2LdL81VT61m0sl2UcL0WzdTzpjib+f6OPjiiin+2qUxo/7PeH7j6VaZVNPdqyK7t6r57lUR/RTCQH8p2tc6zW3avjMctz+N7eu9ZtK9V/8AUxy3f0APnPkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMK6w9QtL6d7Uvapl12rmZXE04eLVXFM3bnE8c/vY85kHU609T9J6c6DN+/Vbv6nfpn3JizVxzMfZVT6qY/p9XxUhvXNQ6h7oubq3TdmrGiubsxc4mL1Uc8eHqojmn2+XHyNU1PW+qG6MrWtZy/TYFVXN2uZ7sVR4zTRTzVx3Y448J9XHq8Md6g7rpmv9htEppsYtmJtd23xHEcTHETE/0/H8c8h19/7vr1Kr9i8GZt4lFXFyumY5uT4R3YmI49Xn5ePHy+BtfRsnVc6zjWsebk3JiPCmZ70eHFMRx8f4f6eHRdMuZ+RNMRTPermKu7MTMT3o4jnnjzXO6AdNNF6fbUp6j71inEm1a9Ph492OKrfMeFUxPnXV4RTT8/r8NUUVV1RTTGZlaaZqnEPU6V7I0DovsivfO7rFr9mK7fGPY4jv25qjmLdPtrnjxn1cfFKEeoO8NY3xuK7rGrXZ9dOPYpn3li3z4U0/2z65d3qvv7U+oG46s/L5s4VmZpwsWJ8LVHPnPtqnw5lilul/U9gbDp2db6y7vuT5fCP7e22RsuNPT06/xT5Pq3S57dL5t0uxbpfdqqeps2n1bpc9ul+UUue3S/NVU+tZtPq3S7Ful826XdwMavJy7ONbj3925TRT8szxD81deH1bVuIjMrjdOsP3BsLQsXjiaMCzNUfvpoiZ/pmXvPixbos2bdm3HFFFMU0x7IiOH2/kV2vrK5qnvnL/ADzfuzdu1XJ75meYAw5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOvqWbi6dg3s7Ov0Y+NYomu7crniKaY9cg8DqVvbSNi7bu6vqt2O9MTTjWImO/fuccxTH9s+qFCt8bl17qrvO7qOqX6/ctNU0zVR73uUR/krdMzHl66o+WfHjnJu0v1KnqRuGLGDVOPpeBFdvFmIpi5XTNUd+qfHznuxHjxEeHr5Rfq26reHosaXpWLXh3PG3XTFzxo5554mKpieeeeeI/LyHb6gbmxcTDp0LQrvdtW/eVV26vezxzExHjMT4TE/H5sH0nFuZufTaqud2JmYmrxmPX5Tz5focOFjXs7Iqjv8xz76fLw8P8A3Wn7L3RSzk00bx3TZt2dExub0Tfnj3Rx4+cT+108czM+fl7SIzuge12auj+m6TpM9Qt5+ix9Lx6PdGNauzzFcR770lcz5xzEcR659XHHPgdbup2bv7WZxsSq5j6Di1z7lx58JuT5ekrj2z6o9UfO9Pr/ANUvowzI2/oMxa27h18UTRE0+6ao8IqmPVTH2McfH7OIpt0v6X6ObAjSUxqdRHtzwj3ff5PXbH2X1eLtyPa7vh937bpdi3S+bdLsW6XqaqnrrNp9W6XPbpflul3MDEyczIoxsTHu5F+ueKLdqiaqqp9kRHjL81dcRGZfVtW4iMy+LdLnt0pO2f0Q3bq/cvanTa0XGnx5v++uzHxW4/JVNKYto9HtnaD3Lt/Eq1bKp8fSZnFVMT8VH1v4eZ+N57W7f0mn3RV0p90fXg+fq/SfZ2h3dLp1e6nf58Fc9q7P3HuS5FOjaTkZFHPE3uO7ap+WueI+bnlM2wOiVWm6hiaruDU6Ll7Gu03qMXGp5p71MxMd6urzjmPGIj50z2rdFq3Tbt0U0UUxxTTTHERHsiH08prPSHU34mmiOjHOebyG0fTbXammbdmIt0z7t885/qIAHwHjQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFJus/WLqVofVTcekaVurJxcHEzq7dizTZtTFFMeUczTMtU05IhdkU77OHVnqHufrJomia7ubIzdPyIyPS2K7NqmKu7j3KqfGmmJ8KqYnz9S4iVU4JgBSHq91k6maL1Q3JpOmbrycbCxNRvWrFqmzamKKIqmIjmaeVppysQu8Kgdmnqv1B3T1g0rRdf3LkZ2n3rWRNyzXat0xVNNmuqPGmmJ8JiJW/SqMICNOtHWXbPTTHjHyedS1q7R3rOnWK4iqI9VVyr7Cn5pmfVE+MxU7e3aB6m7lyLnotcr0TEmfeY+mR6Hux/nP2yZ/lcfFCxRMrhfwayb+8N237vpr+6dcu3Oee/Xn3Zn8M1Pc271c6laDfou4G89YrijytZWRORb49ncud6P6Gurkw2NCuPRvtN6drmVY0XfePY0nMuTFFvULUzGNXV6u/EzzbmfbzNPj492FjaZiqmKqZiYmOYmPWxMTHFH6IR7Xu8tzbM2ho2btjVbum5GRqE2rtdFFFU1U+jqnj30T64hWX6e/Vr7s8v+Ys/qNRRMxlcNhAjjs6b8q6gdM8PUsy9FzVsSZxNQ8IiartMRxXxH7qmaavCOOZmI8kjszGEAV17XXVvWdn5elba2lqc4Op3KZy829RRTVVRb8aaKPfRMe+nvTPr97T7SIzOBYoa9/p79Wvuzy/5iz+ouZtDW9Vzeg2DuHKzKrmqXNv+6q8iaY5m76Gau9xxx5+Plws0TC4Z4Ne/wBPfq192eX/ADFn9Q+nv1a+7PL/AJiz+o11cmGwga9/p79Wvuzy/wCYs/qH09+rX3Z5f8xZ/UOrkw2ECCOmG5d7bq7Mera7GuX69yW6cqvGy4t0d/m1PeppiO73fGImny9at309+rX3Z5f8xZ/USKJkw2ECA+x/1J13e2na9p259Tq1DUcK7bv2btdFNNU2q4mmaeKYiOKaqOf5afGZjE4QFQu0t1m3povVjO0Lam4Lun4On2bVm5RatW6oruzT36quaqZnmO/FP8l73ZH6r7q3XvbUtA3ZrdzUfS4Pp8Sbluinu1UVRFVMd2I86a+f5LXQnGVws+Cqnat6vbt211Htbe2lrtzTrWHhUVZcW7dFU1Xq5mrx71M+VE0fhlmIzKLVigmg9ZesWs65gaRibyy5yM7Jt41qPc9n66uqKY+w9sr8WKJt2Lduq5Vcqppima6vOriPOePWtVPRWYw+xh3VTqRtnpzosahr+TVN67zGNh2eKr+RMefdjnwiPXVPER8sxE1I6g9pLqDuPIuW9GyaNuafPMU2sSIqvTH767Mc8/we6RTMkQvQNZmbvXeObcm5mbs17IrmeebuoXap/pqd/RepvULRr1NzT96a7b7s8xRXmV3Lfz0VzNM/PDXVmGyQVR6T9qbIjIs6Z1ExKK7VUxTGqYlvu1U/Hctx4THx0ccfuZWn07Nw9SwLGfp+VZysTIoi5ZvWq4qorpnymJjwmGJpmOKYc4jvtI6/rG2Ojmta3oObXhahj1Y8Wr9NNNU096/bpq8KomPGJmPnU7+nv1a+7PL/AJiz+otNEysQ2EDXv9Pfq192eX/MWf1H3a699XLdXep3lkTP77FsVR+CaGurkw2CimGxu1PvPTcu3b3VhYeuYc8Rcrt24x79PxxNPvJ+SaY59sLX9P8AeOg7623Z17buX6fFuTNNdNUd25Zrjzorp9VUfgmJiYmYmJZmmYMMgFcO2F1B3jsrWdvWNr65e023lY96u9TRboq7801UxE++pn2ygb6e/Vr7s8v+Ys/qLFEzGTDYQOHArquYOPcrnmqq1TMz7ZmGJdYeoekdN9o3da1GYvZNfNvBxIq4qyLvHhHxUx51VeqPjmInERlGZjX5ldfOrN/Ku36d3XrMXK5qi3bx7UUUczz3Y5pmeI8vNJ/Z11/rL1K3N6XM3jn2du4FcTnX4x7MelnzizRPc+un1z9jHj5zETuaJhcLaAMIAwvrlrGpaB0m3DrGkZVWJn4uL37F6mmJmirvUxzxMTHrI3jNBr3+nv1a+7PL/mLP6i0/ZJ3ZuHePTbO1Tcup3NRzLerXbFF2uimmYtxas1RTxTER51VT87c0TEZXCYQYN171rU9vdItwazo2XViZ+LZoqs3qaYmaJm5RE+ExMeUyxEZRnI17/T36tfdnl/zFn9Razsn7q3BvDpjf1XcmpXNQzadTu2Yu10U0zFEUW5iOKYiPOqfwtzRMRlcJcFFeo3WrqhpnULcmm4O7cmxiYmrZVixbixamKKKbtVNNPjRz4REQ8H6e/Vr7s8v+Ys/qL1cmGwga9/p79Wvuzy/5iz+ofT36tfdnl/zFn9Q6uTDYQK+djjfe7d7U7p+inWbup+45xPc/ft0U+j7/AKbvfWxHn3afP2IY6jdauqGmdQtyabg7tybGJiatlWLFuLFqYoopu1U00+NHPhERCdCc4ML1CpnZa6o793b1Vt6RuLcd/PwZwr1ybNdq3THep44nmmmJ9a2bMxiUAYX1y1jUtA6Tbh1jSMqrEz8XF79i9TTEzRV3qY54mJj1pG8ZoNe/09+rX3Z5f8xZ/UPp79Wvuzy/5iz+o6dXK4bCBr6tde+rlurvU7yyJn99i2Ko/BNDONk9qreGnXrdrdOm4Ot43MRXdtU+57/y+995Pyd2PlhJtyYXNGP9P95aBvrblrXdu5nujFrnuV01R3blmuPOiun1VRzHxT4TEzExLIGEAAAAAAJniOZUo7UnWTM3DrORtvSL02dHwL82qu5ciacyuJmO/MxPjRHhMRHl5z8WfdqLrjVp9y9sTZl+bmpXubWZlWp/a/CebdNXqn21eUeXn5VK3PVh6PiTj1zbytT70VXK4qiYie9zMeHhPyceyefGOQ827m3acuq/zF2O73KqZr55jifLx8vOOfi/Dx3fdGdxNMXK4mqYiqqfVPPFPPP5fN51vInKqoj0tdPh76n5p4iOPV7fi9frWh7MXRzBy9Hr6g9QKKMXQcXm7Yx8iOKb3cn9srmf8nHHl9lPycLETVOIIjO6HB2bOg2brt2zuLctqvE29xRfppuTNNWXEeERHjzFHEeMz7fD4sq7QvVPF1iz9BW05izo2JXFF+9Zq4oyO7HhRTEfYRP4Zh5XV3rVq257t/RtuV16Vt6KPQRRREU3Mij21fuafZTHq80T26X9F9H/AEanTVRqdVHtd0e74z8fk9RsvZM0VRdu8e6H1bpdi3S59J03O1PLow9OwsjMya/rbVi3Ndc/NHil7ZXZ+3Zqvcv65esaHjT4zTX/AIW/MfwaZ4j56omPY9LrdoafSRm9XEfPlxelr1FjSxm9VEfPlxRDbpZds7YG7N1TTVo+jX7liZ8cm5Ho7Mfy6uIn5I5lZ3ZvR3Y+2oouxpv7KZdPj6fO4ucT8VHHdj8HPxpBppimmKaYiKYjiIiPCHjtd6XU76dNRn4z9PvD5Gp9K6aPZ01GfjP0+6CtndnrCsdy/unVq8quPGcbD95R8k1zHMx8kUpg25trQduY3oNE0rFwaeOKpt0e/q/hVT76r55l6w8nq9p6rVz/AJa5mPd3cnmdZtXV6z/mrmY93COUAD8L54AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA109oT4bN2/fK5/Y2LNdPaE+Gzdv3yuf2OlvisPb7JH+MBtz+Dlf+Vur9tcPRLd2FsTqZpW6dRxsjJxsOL0V2rHHfq79muiOOZiPOqJ81lfqtNmfc3r/4LP6610zM7lmFiWuPrx8M27vvtf8A68rJ/VabM+5vX/wWf11Vuo+u4+59+65uHEs3bNjUc25kW7d3jv001VcxE8cxyUUzE7yGe9kD4etF/wAzlfmK1wutO+sfp50+ztw3KaLmVHFjBs1T4Xb9XPdj5I4mqfiplT3sgfD1ov8Amcr8xWzzt567cu7j27tqiuYtY+JXm3KY8pquVzRTz8kW6v8AWkqjNR3q5a1qefrWrZWraplXMvNy7k3b965PNVdU+c//AE9T19g7I3NvrV/2L2zpdzNvUx3rtfMU27NPtrrnwp/LPq5Y62N9Etj4ewOnunaLZs005ldum/qFz13MiqmO/Mz7I+tj4ohqqrowTOFc8Hsk7ouYnfzd1aRj5Hd5i3btXLlPPsmqYp/Ijzqj0Q310/xa9R1DEsahpVE8VZuDXNdFvny79MxFVPyzHHPhz5NgrjyrFnKxruNk2qL1i9RNu5brpiqmumY4mJifOJj1OcXJTLVkt92L+pl/V9Ou7A1rIm5lYFr0um3a6uZrsRxFVr4+5zEx+9mY8qVe+vOzrOxeqWraDhxMYMV038OJnmYtXIiqKefOe7zNPM/uXT6Ma5c251V21q9FyaKbWoWqLsx/0Vc9y5H+pVU6zHShqd6y3by/5Bbf++k/mqlO1xO3l/yC2/8AfSfzVSnaUcEhNXY/3x9C3U2jRsu93NN16KcWvmfCm/E/4Gr55maP5fxLztWFq5ctXaLtquqi5RVFVNVM8TTMeUxPtbGeh+9be/emul69NdM5nc9BnUx9jkUcRX4ernwqiPZVDFyO8lles6jh6RpGZquoXos4mHYrv37k/Y0UxMzP4Ia2Oom58zeW9dV3Lncxdzsia6aJnn0duPCij+TTFMfMtP23d8/sVtTD2ThXuMvV5i/lxTPjTjUVeET/AAq4/BRVHrU5atxuyQNgmw/8WTTf+63/AKeWvtsE2H/iyab/AN1v/TyXCWvtKHQjpBk9VadYqx9dtaX+xk2Iq7+PN30npPSeyqOOPR/0ovTr2Uep+1enNG5Kdy3cu3+yE4s2PQWJuc+j9L3uePL6+lqrONyyyn6kTUvu5xP9nVf3h9SJqX3c4n+zqv7xJP1TnSz/AK1qv4jP6WYdMuq20eouXm4u272ZcuYVum5e9PjzbiIqmYjjnz8nPpVQzmX10S2Jd6ebCtbYyNRt6lVRfu3ZvU2ptxMVzzx3ZmVCuqO352r1E17b/dmm3hZ1yizE+u1M963Pz0TTLZapf25Nvfsd1J0/cFuju2tXwoiurj667Znu1f8A+JtFE7yGN9kTcX7A9atOsXLncx9WtXMC5zPhzVHeo+fv0Ux8692bk2cLCv5mTXFuxYt1Xblc+VNNMczP4Iav9F1DI0nWMLVcOru5OFkW8izV7K6Koqpn8MQvX2ht54+N2d8/W8C7xGu4dmxiTz9dTkRHP/hzXPzLXG+FlRzdmsXtwbo1TXcjn0uoZd3JqiZ8u/VNXHzc8Mm6B6/9DXWHbWqVV9y17tpx70zPhFu7zbqmfiiK+fmYVi497KybWNjWq7t67XFFu3RHNVVUzxERHtfFNVVFUVU1TTVE8xMTxMS6Y7lbT6pimmaqpiIiOZmfU1pdT9wTurqHr24e9NVGbm3K7PPqtRPFuPmoimPmXU35v+mOzFf3nbvRTk6jo1uiiafOm/epi3PHx01VVT/JUIc7cJCX+yDt79netWn5NyjvWNJs3M65zHhzEdyj5+/XTP8AJXe3dr2BtjbOo7g1S53MPAsVXrnHnVxHhTHxzPERHtmFf+wht73NtfXtz3aOK83KoxLMzHj3LVPeqmPimq5x/Ieh26NduYPTrStCs3JonVM/vXYj7O3ap70x/r1W5+ZKt9WEniqn1F3fq++d25m49ZuzVeyKuLdrvc0WLcTPdt0/vYj8M8zPjMuhtnQNZ3NrNjR9B06/qGffniizap5n45mfKmI9czMRHrl5q83ZA2Phbb6ZY24blmmdV12n0927PjNNnmfR0R7I499Px1fFDpVPRhqdyIdC7J28MrEpvatuDSNNuVU8+hoprv1Uz7JmOI/BMsZ6h9nTqBtLT7up49vF13Bs09+7VgTVN23T65m3VETMfwe9x5yveOXWSzlquWJ7GvU2/o+46NhatkTVpmpVzOBNdXhj5Hn3Y9lNfs/dcfupeB2wNj4e0upFvUdLs02MDXLVWV6KnwpovxVxdimPVE801fLVPq4Q5p2ZkafqGNn4lybWTjXab1quPOmumYmmfmmIdfxQ1xXy7XPwAbh/h4v/AJm0oMvX2mdRt6v2YtR1azHFvNsYGRRHxV37NUflUUZt8EhNvR/s+5nUTZVnc1nc+Pp9Fy9ctehrw5uTHcnjnmKo8/kZHrHZK3NYw7lzSt06XnX6Y5ptXbNdnv8Axd7mrifl/oS12MvgOw/47kf10y3rtuzZrvXrlFu3RTNVdddXFNMR5zMz5QzNcxKTLVxqmBmaXqWTpuoY9zGzMW7VZv2a44qorpniYn5JhNHYz3bkaH1Vo0Cu9MYGuWqrNdE/Wxeopmu3V8vhVT/LYD1w1fT9d6t7l1XSrlu7hX86r0Ny3PNNyI4p78T64qmJnn43pdmrFuZfXTatq1MxVTlzdnj2UW665/opl0nfDXclbt8f8f7V/iuR/XoVlWa7fH/H+1f4rkf16FZUo/CQ2Y7g3LpG0dk1bg1zJjHwsTGpqqnzqrniOKKY9dUz4RDX91d6gav1G3fe1zU5m1Yp5t4WJFXNGNa58KY9sz5zPrn4uIj3+v3VbN6iaxYw8Wq5Y29p0RRh2J8PS1RHE3q4/dT48R9jHh5zPOB7V0HVdz7gw9B0XFqys/MuRbtW6f6ZmfVTEczM+qImUopxvlIh7fSbYWr9Rd32NB0un0dv9sy8qqnmjGtRPjXPtn1RHrmY8vGY2FbJ2xo+zts4e3tDxosYeLRxHPjVXV9lXVPrqmfGZ/seD0Y6c6V022ha0fC7t7Nu8XM/M7vFWRd4/opjypj1R8czM5uxXVlJkAYQR52kvgN3X/E4/r0pDR52kvgN3X/E4/r0rHEhrxXV7C3wQ6l9/b35iwpUn7s69ctv9NNj5Wg6rpGqZl+9qNzLprxvR92KardumI99VE880T+GHauMw1K6aNu098A+6f4vb/PUI/8AqtNmfc3r/wCCz+uxTq72jdr7z6caxtnB0PWcfJz7VNFu5ei33KZiumrx4qmfKlzimcphWJdvsPfA3k/fi/8Am7Ski7fYe+BvJ+/F/wDN2nS5wWVSurPwqbt+/mb+frdzo5sO91G3nRtuxqVGnV1Y9y/6au1NyPe8eHETHt9rp9WfhU3b9/M38/WyTs3by0TYnUu3r2v136MKnEu2pmzb79Xeq448PmXu3KlT6kTUvu5xP9nVf3h9SJqX3c4n+zqv7xJP1TnSz/rWq/iM/pe5sXrnsLem6MXbmiZGoV5+VFc2ou4s0U+8omueZ59lMuea2d7qdnjpFk9Ko1yMjXLWqfsp7n7vcx5tej9F6T21Tzz6T+hS3qz8Km7fv5m/n62ytrU6s/Cpu37+Zv5+taJzKwkXsWfDbZ+92R+SleZRnsWfDbZ+92R+SleZm5xSRHnaS+A3df8AE4/r0pDR52kvgN3X/E4/r0sxxSGvFMfRLoTl9Ttp5Gv2NyWNMps5teJNqvFm5MzTRRV3uYqj93xx8SHF1ewt8EOpff29+YsO1c4hqUear2SNx2sWuvTd2aXl3ojmm3ex67MVT7O9E1cfgV73Do+pbf1vM0XV8WvFzsO7Nq9ar86ao/LE+cTHhMTEw2htfXai1fC1rrluHK0+7bvWLddrH9JRPMVVW7VFFf4Koqj5koqmZ3kS9TskbwyttdW8HTfTVRp+uT7iyLcz4TXPM2quPbFfEc+yqpfFrb6MWrt7q9s+izz3/wBm8SrmPVEXqZmfwRLZIzc4pIA5oAAIw6rdRdO0vI1PZkU5djV72nVXcarvehi/TVHE+iuePvo58Z48OJnieEnV1U0UzVVMRTEczM+pB/Xi1oO+tv3Mi5lWtHw9Gqqu2dxXLVXpKL9Plbx48Kq4meO9MeE8RERM+MBVrrJtTUelOod3UMuzqOfn0zV7ot3e9FHPenu1Rz3onz8ao99zMx5cIWvXMrPy5u1zVev3Kuapq8Zn8KyF3c9jq1g4ehbxs2MDedNE2dN1Cu16PH1a1zMcV+yYmmrxjz54+Jm3Rrsx4mNu6Na1nL92aHjxTVRYrtzTXduRM82qon7COI8fOfGPUDGuzL0GwMvRat7dQ7VqzoNmib1mi9Pcm/EeM1VT4cW448Pb6vB6/XXq19F9Nvbm26K8PbmNxHHd7k5E0+XMR5UR6o+efVETf1G2LunqJk2tIu59nbm08WqO7Yt09/IypjymaYmKaKI+xiZmY85jnwj2dkdHth7U9HdxNHozsyjj/wCKz+L1fPtiJju0z8dMQ9Nsq/s/ZsRqL3t3e6I4U/vPDP7Zx+76ekuafTf5K/aq7ojuVR2P0u3ru30dzS9FvUYlf/O8n/BWePbEz9dH8GJTpsns36NhdzI3Vql3U7seM42Nzas/JNX11UfHHdTyGu9K9dqcxbnoR8OPP6YdL+2tRc3UezHw48/ph5m3tv6Jt7D9yaJpWJp9n1xYtxTNXx1T51T8c8vTB5uuuquelVOZfKqqmqc1TmQBlkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa6e0J8Nm7fvlc/sbFmuntCfDZu375XP7HS3xWGHaRpmpaxqFvTtJ0/L1DNu8+jx8WzVduV8RMzxTTEzPERM/JEsg+lt1F+4HdX+x8j9RlnZI/wAYDbn8HK/8rdX7aqrxKzOGtj6W3UX7gd1f7HyP1GN5+Hl6fm3sLPxb+JlWK5ou2b1uaK7dUedNVM+MT8UtpbXH14+Gbd332v8A9eSmrpETlk/ZA+HrRf8AM5X5it7/AG5rFy31cwL1UT3Lui2ppn1eF29Ex+T8LwOyB8PWi/5nK/MVpn7c20b2o7S0vd2JZmurSbtVjLmmPGLN2Y7tU/FFcRH8smcVneqDhXabGbYv10RXTbuU11Uz9lETzw2kYt+zlY1rJx7lN2zeoi5brpnmKqZjmJj5YasluOy71y0b6HMTZe8tRs6flYNEWcDMyKootXbMRxTbqqnwpqpjwiZ4iYiPX5rkZJWZHxZu2r9mi9ZuUXbdcRVTXRVE01R7YmPNH/Vvq7tPp7pWRVlahj5msRTMY+mWLkVXaq+PDvxH7XT7ap+PjmfByiMsqvdtXNx8rrXXZsTRNeJptize7vn3571fj8fdrp/oRHtaxcytzaVjWYmbl3Ns0URHnzNcRBufWtQ3HuHP13VbsXc3Ov1X71URxHemfKI9UR5RHqiIST2T9pXdz9YdNyarM1YOjT+yGRX6oqo/ao+Wbndnj2Uz7HfhDfBNXby/5Bbf++k/mqlO1xO3l/yC2/8AfSfzVSnaUcEhlHVHaORsvdtzSbveqsXbNvLxLlX+Us3Ke9TPxzE80z8dMpT7GvUCxtjd+btzVsujH0vVbM3aLlyrii1ft0zVzMz5RVRFUT7ZilI/ar2N+zvR7RN2YVnvZ2h4lr03djxrxq6aYq+Xu1cVfFE1qeke1BxhlnV7eF/ffUPVdyXZqizfu9zFt1f5OxT723Tx6p4jmfjmXxo20cnM6c69vO73qMPTr9jEsz6rl65VE1fNTR5/w6WN4eNfzMuziYtqu9kX7lNu1bpjma6qp4iI+OZlbnrds6xsTsl4+27UUTesZGNXlXKf8pfqr5uVfHHM8R8UQszjECoLYJsP/Fk03/ut/wCnlr7bBNh/4smm/wDdb/08s3CWvt39H0PWtZ9L+xGkahqPoePS+5cau73OeeOe7E8c8T5+yXQWr7AP7VvT+Fg/+oaqnEZWVc/oJ3n9yOv/AOzb36qxXYf0HXNH3DuW5q+jajp9FzEsxbqysWu1FUxXVzEd6I5WoHKa8xhnIgztrbe/ZbpHTq9u33r2jZtu9NURzPoq/wDB1R+Gqif5Kc3jb40O1uXZ2sbfu93u6hhXceJn7GqqmYpq+aeJ+ZmJxKNY6R97dQKtd6L7M2d6Wqq7pF7JnKifXETEWJ+aiuun5kd5Fm7j5Fyxfom3dt1TRXTPnTVE8TEvh+jDaYex/tyNe60YWTdtxXj6Tj3M25Ex4TVEdyj5+9XE/wAlgnVbb07U6j6/t/uTRbw825TZif8AopnvW5+eiqmVmuwjt73LtHXNzXaOK8/LpxbMzHj6O1TzMx8U1XJj+QwTtz7d9wdQtM3Fat921q2F6O5Ptu2Z4mf9Sq3HzMRV7WEzvR/rW/qs3oFoOw4uzNzC1fIvXKfZZimKrfPxTXeu+H7yPiR0Mn6UbendfUjQNvzR37eXnW6b0cf5Kme9cn/Upqlvgq+fQjb30L9Itt6RVb7l6MOm/fiY8Yu3eblcT8k1zHzIV7fdi5Vp2z8mIn0du7l26p9XNUWZj+rK0MeEcQibtX7Su7r6P504dmbubpNynULNNMeNUURMXIj+RVVPHrmmHCmfayzHFQdse6GZmPn9HNo38WaJt06Rj2Z7vlFduiKK4+aqmYa4Vieyj1owNpWatm7syPc+kXbs3MHMmJmnGrqn31FfHlRM+PPqnnnwnmOtcZhZXIHX03PwdTw7ebp2bjZuLcjmi9j3ablFUfFVTMxLH+oHUDaexdNuZm4tXx8eumjvW8WmuKsi97Iot88z8vlHrmHBlXjt95uPXnbR06maJyLVrKv1x9lTRXNqmn5pmir8CrrK+rO+NQ6hb3zNyahRFmLnFvGsRPMWLNPPdo59c+MzM+uZmfDycXSvauRvTqBo+3LFuqqjKyafdFVP2Fmn31yrn4qYn5+I9b9FMYhuFsOtFi5i9jTHxr0TFyzpGk264nz5iuxEqUr79rWii32fNft26YpopnEpppiOIiIybXEKEM2+CQ93Rd57w0TBjA0bdeu6biU1TVFjE1C7atxM+c92mqI5lxa1uvdGt2vQ61uTWdSt+HvMvOuXo8PiqqlNfQzs/wCj9Q9gWNy5m4M7Bu3Mi7am1as0VUxFE8c8yjrrt04yOme9Z0b09zLwL9mm/h5VdHdm5TPhVExHhExVExx7OJ9bWYzhWArZ9jLpdn6ZdudQdexKseq/Ymzpdm7TMV92r669MT5RMR3afbE1T5TEzXno9r2lba6k6JrGt4GPnabZyYjIt37cV00U1e99JET9lRz3o+OlsitV0XbdNy3XTXRXEVU1UzzExPlMSzcnG5JlUrt8f8f7V/iuR/XoVlWa7fH/AB/tX+K5H9ehWVaPwrD0NyaJqe3daydH1jErxc3Gq7ty3V8ccxMT64mJiYmPOJhn3Zv6i4nTnfsZ2p4du9p2dbjFyr0W+9dx6Zqie/RPnxExHepjzj2zELO9oHpFY6i7MxdR0u1bt7lwMWn3Lcnin3TRxzNmqfwzTM+U+yJlRnLx8jDy72Jl2bljIs1zbu2rlM01UVRPE0zE+UxPhwRMVQnFtHwsnHzcOzmYl+3kY9+3TctXbdUVU10zHMVRMecTDlU47J3WWNu5lnY+6MvjR8m5xp+Tcq8MS5VP1lUz5W6pnz+xmfZMzFx3GqnEsyAICPO0l8Bu6/4nH9elIaPO0l8Bu6/4nH9elY4kNeL2tC2juzXsOrM0LbGt6rjUXJt1XsPAu3qIriImaZqppmOeJiePjh4q6vYW+CHUvv7e/MWHeqcRluVVPpbdRfuB3V/sfI/UdbVNjb20vAu6hqeztw4OHZjm7kZGmXrduiOeOaqqqYiPGYjxbMEbdp74B90/xe3+eoYi5mUy17rt9h74G8n78X/zdpSRdvsPfA3k/fi/+btNXOBKpXVn4VN2/fzN/P1vD0vTtQ1TKjE0zAys7ImmavRY9mq5XxHnPFMTPD3OrPwqbt+/mb+frSL2LPhts/e7I/JSucQqM/oJ3n9yOv8A+zb36qUOyttfc2m9ctCzNR27q+HjUUZPfvX8K5bop5x7kRzVMREczMQvEOc3Mwzka1OrPwqbt+/mb+frbK2tTqz8Km7fv5m/n6y3xISL2LPhts/e7I/JSvMoz2LPhts/e7I/JSvMlziSI87SXwG7r/icf16Uho87SXwG7r/icf16WY4pDXiy7ZnUvfOztLuaXtrcF/TsO5em/XaotW6om5MU0zVzVTM+VNMfMxFMfRLoTl9Ttp5Gv2NyWNMps5teJNqvFm5MzTRRV3uYqj93xx8T9E4722Max1j6n6th3MPN3nqc2LtPdrptVU2e9Hs5oiJYHPjPMrQWuyHnTVxc33j00+2nTKpn8HpIZpsjss7K0bLt5ev6jm7hrt8TFmumLFiZ9s00zNU/J3uPbEs9OmEzCOuxb04y8/csdQdSx6renYEV29PmqOPT35iaaqoj1000zVHP7qY4+tlcJxYeNj4eLaxMTHtY+PZoii1atURTRRTHhEREeERHshyuNU5lmQBAfF+7asWa716um3boiaqqqp4iIj1uPUczF07BvZ2dft4+NYomu7duVcU0Ux5zMob3fu3C1ymMrc2o4uhbW9NVRj4+XX6O/qkRHFXETxMU/Xe9854j2+Id/ce5sjc+Dfz6vSYGz8Wrmq7PNNzUeInnj102OeOZ86vVPHPNfNz6zrPVbfOJt7BnJx8TFnuRZs5EV26bMzx6Ty4708xEery+OXn9U+odXULXbumaRptynFpiixh49NuKouUR9bVx3Oe74eHFURHKx3Zs6YYuzNtWs7KtRVqGTT35r58YifH2R83yc+sHo6R0b2jl7Ts6TuXRsfPpt2YtWaao7s48R66aqeJiqeI5mJ9UR6vGQtv6TiaHouJpOBFyMbFtxbt+krmuqYj1zM+My7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA109oT4bN2/fK5/Y2LIX3j2btjbp3RqO4tQ1XcdrL1C/N67RYyLMW6ap9VMTamePlmW6JiJ3rCtnZI/xgNufwcr/wArdX7RD067PmzNi7wwt0aTqev383Di5FujKv2arc9+3VRPMU2qZ8qp9cePCXkrmJncSNcfXj4Zt3ffa/8A15bHEK7t7NWxdzbm1HcGfq247eVqGRXkXaLORZiimqqeZimJtTPHyzK0TETvIlXTsgfD1ov+ZyvzFa9mq4GHqumZOmajj28nDyrVVm/arjmmuiqOJifmRZ037P8As3Ye7sXc2kanr9/MxqblNFGVfs1W5iuiaZ5im1TPlM+tLiVzmdxKgfXjozrfTjVbuZi2r2ftu7Xzj5tNPM2YmfC3d4+tqjyifKr1ePMRFTadkWbORYuWMi1Res3KZprt10xVTVTPnExPhMIa3t2a+nG4ci5l4NjL0DIrnmY0+uIszP8Am6omIj4qe7DcXPesSo1byL9uiaLd65RTV5001TES41r7/ZCxJu82N+36LfP1telxVPHyxdj8j3Nu9lDZmHfou61rurarFPnaoinHoq+Xjmrj5Koa6dJlVDZG0tf3nrtrRdu6ddzMq5Pvppjii1T6666vKmmPbPyefgvz0P6baf0z2dRpNiujJ1DIqi9qGXFPHpbnHhEevuUx4RHyz5zLJdp7Y2/tTS6dM25pGLpuLHjNFmjia59tVXnVPxzMy9dzqrykyrl28v8AkFt/76T+aqU7bHOrfTXQupmkYema9l6ljWcS/N+3VhXKKKpq7s08T36Ko44n2I2+pO6dfbrdX41j/wBy1TXEQsSmbRsTGz9l4WDmWab2Nk6dbtXrdUcxXRVbiKqZ+KYmYa7uq20cnY2/9V21kd6qjFvTOPcq/wArZq99bq+WaZjn2TzHqbI8DGt4WDj4dqapt2LVNqmap8ZimIiOfj8EedW+jG0upeqYep65f1PEy8SzNiLmDdt0Tco55iKu/RVzxM1cccfXT5s0VYlIlXDsYbG+iHqBc3Rm2e9p+gxFdvvR4V5NXPcj+THNXxTFHtTl2zPgNzf47j/12f8ATHY2idPNrUbe0H3RXjxdrvV3ciqmq7drqnxqqmmmmJ4iKaY4iPCmH71N2TpXUDal3bes5GbYxLl2i7NeJXTTc5onmPGqmqOPmJqzVkzva1GwTYf+LJpv/db/ANPLDvqTunX263V+NY/9ymHSNr6fpmxbGzrF7KqwLOB7gpuV1Uzdm33O5zMxER3uPi4+JaqokmWst2tP1LUdP7/uDPysT0nHf9Beqo73HPHPE+PHM/hXJ+pO6dfbrdX41j/3J9Sd06+3W6vxrH/uW+nC5VA+iTcX2/1X8cufpPok3F9v9V/HLn6Vv/qTunX263V+NY/9yfUndOvt1ur8ax/7lOnSZh7nY9y8vN6LY1/Nyb2TdnOyImu7cmuriKo9cpiYx0x2RpXT7atvbmjZGbkYlF2u7FeXXTVc5qnmfGmmmOPmZO5Tvllr27TG3vob61bgxqLfcsZd/wB3WfDiJpvR36uPiiua4+ZG7YN1a6K7T6l61iavrmXq2LlY2P7mpnBu26Iro701R3u/bq8pqq8uPNiOH2VenWNmWcidU3Lei1cpr9HdybE0V8Tz3aoizE8T5T4w6xXGGspG6Ibd+hXpPtzRaqO5et4VN2/T64u3P8JXHzVVTHzMF7Z+3f2Z6PXNTt0d6/o2XbyYmI8fR1T6OuPk9/TVP8FNrz9y6Ph7g29qGhajFc4moY1zGvdyYiqKa6ZpmYmYniY55ifa5RO/LLV8sJ2Gdvfsh1E1PcNyjvWtJwu5RPHldvT3Yn/UpuR86T/qTunX263V+NY/9yknpJ002/0z0nM07QL2fkU5l+L927mXKK7kzFMUxTE0U0x3Y4mfLzmfF0qriY3NTLNSYiY4mOYkHJlS/tLdCtQ23qeXuvaWFXlaBfqm7kY1mjmvBqnxn3sedr1xMfW+U+ERM1+bUUV9QOgXTneGRczLmmXNIzrnM15Gm1Ra78+2qiYmiZ5854iZ9rrTc96xKgtm9eszM2bty3M+fcqmOfwPiqZqmZqmZmfOZWyzeyHgV3JnC31k2aOfCL2m03J/DFyn8jv6J2SdsWL1Nesbq1XOoieZox7NGP3vi5nvtdOlcqlaJpWpa3qljS9IwcjOzb9XdtWLFE1VVT8kfl9S8nZq6P0dN9Gu6lq/or248+iKb9VHFVONb8/RU1eueeJqmPCZiIjwjmc62FsHaOxsKcbbOi4+FNdPF2/xNd67/CuVc1THPjxzxHqiGTudVedyTKJ+1z8AG4f4eL/5m0oM2YdRdo6bvrZ+ZtfV7+XYw8ybc3K8Wumm5Hcrprjiaqao86Y9XkiL6k7p19ut1fjWP/crRVERvIl6/Yy+A7D/AI7kf13a7Vmwvo06ZX8vDs9/VtF72Zi8R76uiI/wtuPlpjmI9c0UwzfplsnSun+1be3NGyM2/iW7td2K8uumq5zVPM+NNNMcfMyZmZ35garl4ux5v36Kencbfzr3e1PQe7Y99Pjcxp/aqvm4mj+TT7XDqvZZ6c5+p5WdGobixIyL1d30GPkWYtWu9Mz3aIm1MxTHPERMz4Pf6YdCdrdO90U7g0HWtxV5Hoa7Nyzk5Fmq1doq9VUU2qZniYiqOJjxphuqqJhZlD3b4/4/2r/Fcj+vQrK2G9Xej+2up2Zp+Vr2dq+NXgW67dqMK7boiYqmJnvd+ir2R5cMF+pO6dfbrdX41j/3JTXEQRKdtM/4txf8zR+SFee1l0ZnXsW9vva+Lzq2PR3tRxbdPjlW6Y/bKY9dymI8Y+yiPbHE2LsW6bNi3ZpmZpopimOfPiI4fbnE4nLLVct92S+s37MY9jYW6crnUrNHd0zKuVeORREftVU/u6Y8p+yiOPOPfZTuvsz9O9wbhzNZqv63pteXcm5Xj4N+1RZpqnzmmmq3VMczzPHPHj4cR4PPxuyrsDFybWTja/u6zftVxXbuW8yxTVRVE8xMTFnmJifW6TVTMNZiU9DhwbNeNhWce5k3squ1bpoqv3u737kxHHeq7sRTzPnPERHxQ5nJkR52kvgN3X/E4/r0pDeNvfbmDu7amobb1K7kWsTPteiu149VNNyI5ifezVExz4euJWOI1jrq9hb4IdS+/t78xYfP1J3Tr7dbq/Gsf+5Sh0o6faN0225f0HQsnUMnGvZdWVVVmXKK64rqpopmImmmmOOKI9XtdKqomGpllyNu098A+6f4vb/PUJJeJvvbOBvHaWftnU72TZw86iKLtePVTTciIqir3s1RMedMecS5xullrJXb7D3wN5P34v8A5u06/wBSd06+3W6vxrH/ALlKXSvYOj9OdtV6BoeTn5GLXk15M15ldFVfeqimJjmmmmOPex6nSqqJhqZUA6s/Cpu37+Zv5+tj+FmZeDf9PhZV/Gu8cd+zcmirj2cwu3uHsx7C1zcGo61l6vuWjI1DKu5V2m1k2IopruVzVMUxNmZ45meOZl0fqTunX263V+NY/wDcrFcGVQPok3F9v9V/HLn6T6JNxfb/AFX8cufpW/8AqTunX263V+NY/wDcn1J3Tr7dbq/Gsf8AuTp0mYeB2ENS1HUKd5e78/Ky/Rzg9z096qvu8+6OeOZ8PKPwK49WfhU3b9/M38/WvZ0g6T7d6XxqkaBm6rk/sl6L03u67br7vo+/3e73KKeP2yeeefUw7cPZj2Frm4NR1rL1fctGRqGVdyrtNrJsRRTXcrmqYpibMzxzM8czLMVRmZTKkmFmZeDf9PhZV/Gu8cd+zcmirj2cw730Sbi+3+q/jlz9K3/1J3Tr7dbq/Gsf+5PqTunX263V+NY/9y106VzCoH0Sbi+3+q/jlz9Kw/TnNzM/sZ75vZ2XkZV2M27TFd65NdUR3cfw5n1eMs4+pO6dfbrdX41j/wByzfb/AEc2xonTDVunuLnaxXpWqXqr1+7dvW5v0zVFET3aotxTEf4OnzpnzlJqiTLXqur2Fvgh1L7+3vzFh8/UndOvt1ur8ax/7lKHSjp9o3Tbbl/QdCydQyca9l1ZVVWZcorriuqmimYiaaaY44oj1e0qqiYJllwDkyKu9pzrlu/au/6tqbSyLWnU4Nq3Xk5FePRdrvV10xXER34mIpimY8o5558VokbdU+iuyeouq2dW1m3nYuoW6It1ZGDdpt1XaI8oriqmqJ49vHPHhz4RxqmYid6w5ezzv7K6i9N7Gt6hYos59i/XiZU244ouV0RTPfpj1RNNVPh7eUiPF2RtbRNm7cxtA2/iRi4VjmYiZmqquqfGquqqfGapn1/NHEREPQ1fPx9L0zJ1HLqqpsY1uq5cmmmap4iOfCI85SeO5GJ9VN1bY0DTIt69apza4mm9axO73u9VTPvKqonwiO9Ecc+uPLwUn63byyd7bnt27tFi3jYtE0WLXemuqz5xMeFPvfj5iJq+Ljwmirp9vzrFqN3W9TyI0HRs/Im5XVetTVd9BHHdt26Z4mfCIiapmI8+InmeZZ6e9DOnuzqYu2dJp1XNmeasrUopvV8+uYpmO7T80coIk7KvSqujJs7q1XTqqKa7f+C90WeKop5pmmafCPPj5YjjyWoiIiOIjiIflNMUxFNMRER5RD9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHzXXRRHNddNMe2Z4cFeo6fb+vzsWn5btMf2rFMzwhYiZ4OyPOr13Q7f1+s6dT8uTRH9rjncu3I/wD5/S/xuj9LcWbk/lnk1Fque6Xqjyfom259vtL/ABuj9J9E23Pt9pf43R+leoueGeS9Tc8M8nrDyfom259vtL/G6P0n0Tbc+32l/jdH6TqLnhnkdTc8M8nrDyfom259v9L/ABuj9L9+iXbn2/0r8bt/pOpueGeR1VzwzyeqPLjce3qp4jXtLn5Mu3+ly063o1f1ur6fV8mTRP8Aak2rkflnkk2647pd8dWnUtOr+tz8Wr5L1M/2uWnJxq/rci1V8lcSzNNUcYZmmY7nKETExzExMfEMoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOvnYePm26LeTRNy3TXFfc597VMeXej1x6+J8HYAIiIiIiIiIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0Nw51/TNFyc7Gwrmbds096mxR51eMR8fl5/MjPK6oa/zMWdBsWpj1XIrq4/Bwlsfr01+zaiest9Kf3w/VYvWrce3R0v5Qrd6j7wuz7zGx7XxUY1U/lmXBO9OoF2rm3dyI+KjBon8tMpxH7Y2lYjhYp/9/D9Ua+zHCzH/v4QbO4OpF+eYnVZ/gYMR+Sg92dTLv2GvR/8vVT/AGJyDtWiOFmnkvaVMcLVKDZt9TLnr1+P5ddP9r5nTOpVz66rXZ/hZVX9tSdBe2Ko4W6eR2pMcLdPJBcaB1Hq8e7q3z5nH+8+4251In7HU/x6P104h21c8FPL7na1zwU8vug+Ns9SZ9Wo/wC0Kf131G1+pX/9h/tKn9dNwnbN3wU8vunatzwU8vuha3trqdR9Zf1Cj5NTiP8Afdm1onVSjyzMz+Vn0z+WpMAzO17k8aKeX3Znadc8aKeX3RPTpnVenyzLnz5FuXLaxOrdueacqJ/hV2KvywlMc52nVPG3R/qzO0Jn/rp5Iyijq5H+WsT82P8AofcR1bjzqxp+X0CShntD9Kj/AFZ9e/Tp5I2/4Wv+y/8Agn/C1/2X/wAFJIdofpUcvunrv6dPJG3/AAtf9l/8E/4Wv+y/+CkkO0P0qOX3PXf06eSM5tdXK/8AnGPR8kWP0S/J0/qvc+u1SzT/ACrcfkpSaHaM91uj/VfXp7rdPJGE6B1Pu/Xa9ao/+YmPyUv2NodQ7n7bu2KP4GXe/VhJwvadzuppj+IO0LndTTyhGE7D3jc/bt33avlyLtX5ZcdXTHW7v7fuaavliur8spTCNq6iOExH8QvaV+OExyhFMdIr1U83Nfp5/isz/vuWjpDaj6/Xq6vkxYj/AH5SiLO19Z4/KPoTtPVeLyj6I2t9I9Oj6/V8qr+Dbpj9Lmp6TaH9lqOoz8k0R/upDGJ2pq5/P8mZ2jqZ/OwCnpRt2PPM1Sf9LR+o5Kele2o87uoz8t6n9VnYzO0dVP55Z9e1Hjlgv0rNs/8ASah/PU/qn0rNs/8ASah/PU/qs6E7Q1Xjk9e1Hjlgs9K9tT/ldRj/AE1P6r5npVtuf+canH+lo/UZ4L2jqvHJ69qPHLAZ6Ubcn/nmqR/pbf6j8+lPt3/ruq/ztv8AUZ+HaWq8cnr+p8csA+lPt3/ruq/ztv8AUPpT7d/67qv87b/UZ+L2lqvHJ6/qfHKP56T7f58M7VI/0lv9R+/Sq0WPrdT1WP8ASUfqs/DtLVeOT1/UeOWA/Su0yPLWNVj/AElP6HzPS7T/AFa3qn+vT+hIAdparx/JfX9R4kfT0twvVrmpfhh8z0txfVr2o/0JDDtLVeP5HaGo8XyR1PSyx6twZ8fLTH6XxPSun1bjzI+W3/8AckgXtTVePyj6L2jqfF5QjSelVXq3Lkx8tj/73xPSm/6t0Xo+XGn9dJwvaur8XlH0XtLU+Lyj6IvnpTl+rdFyflxp/XfE9KtQ9W5Zn5bNX6yUxrtbV+Lyj6L2nqfF5R9EUz0r1T1bipn5bdX6z5npZrPq1+1Py01/pSwL2vqvF5Qvaep9/lCJvpW61Hlr9rn5Kz6Wm5aP2vcNqP8ASXISyHa+p98coO09R745QiWen+9rf7VuGz+N3on+q58DZ3UGnIpou7nuWLPPvqqc27XxHxU+HP8AQlMJ2rfmMTEcoJ2lemN8RydXScW7hafaxr+ZezblEcVXr3Hern5naB82Zmqcy/BM5nMgCIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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" alt="HW Solutions Logo">
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a onclick="hwScrollTo('services')">Services</a></li>
+      <li><a onclick="hwScrollTo('pricing')">Pricing</a></li>
+      <li><a onclick="hwScrollTo('about')">About</a></li>
+      <li><a onclick="hwScrollTo('howitworks')">How It Works</a></li>
+      <li><a onclick="hwScrollTo('contact')">Contact</a></li>
+      <li><a onclick="openTerms()">Terms</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">🌙</button>
+      <div id="navAuthBtns">
+        <button class="btn btn-outline" onclick="openAuth('login')">Log In</button>
+        <button class="btn btn-primary" onclick="openAuth('register')">Sign Up</button>
+      </div>
+      <div id="navUserBtn" style="display:none;">
+        <button class="btn btn-primary" onclick="showDashboard()">My Dashboard</button>
+      </div>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== MAIN SITE ===== -->
+<div class="main-site" id="mainSite">
+  <!-- HERO -->
+  <section style="padding-top: 0; padding-bottom: 0;">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">Mumbai's #1 Assignment Helper</div>
+        <h1>Your Homework,<br><em>Solved & Delivered</em></h1>
+        <p>Stuck on assignments, thesis, or any writing work? Short on time? We've got you covered. Professional written solutions delivered to your door or as a PDF online.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary" onclick="placeOrderFlow()">Order Now →</button>
+          <button class="btn btn-outline" onclick="hwScrollTo('pricing')">See Pricing</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="card-stack">
+          <div class="service-card">
+            <div class="service-icon">📝</div>
+            <div>
+              <h4>Homework & Assignments</h4>
+              <p>All subjects, all levels</p>
+            </div>
+            <div class="price-tag">From ₹149</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎓</div>
+            <div>
+              <h4>Thesis & Projects</h4>
+              <p>Detailed, well-researched</p>
+            </div>
+            <div class="price-tag">From ₹199</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">✍️</div>
+            <div>
+              <h4>Any Writing Work</h4>
+              <p>Essays, reports, letters</p>
+            </div>
+            <div class="price-tag">Custom</div>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box"><strong>500+</strong><span>Orders Done</span></div>
+          <div class="stat-box"><strong>98%</strong><span>On Time</span></div>
+          <div class="stat-box"><strong>⭐4.8</strong><span>Rating</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Services We Provide</h2>
+      <p class="section-sub">From school assignments to college thesis — whatever you need written, we handle it.</p>
+      <div class="services-grid">
+        <div class="s-card"><div class="s-icon">📚</div><h3>School Homework</h3><p>All subjects — Science, Maths, English, Social Studies and more. Neat handwriting, exact format.</p></div>
+        <div class="s-card"><div class="s-icon">🏫</div><h3>College Assignments</h3><p>University-level assignments across streams — Arts, Commerce, Science, Engineering.</p></div>
+        <div class="s-card"><div class="s-icon">📄</div><h3>Thesis & Dissertations</h3><p>Full thesis writing with research, structure, citations and formatting as per your university guidelines.</p></div>
+        <div class="s-card"><div class="s-icon">📊</div><h3>Projects & Reports</h3><p>Project reports, lab reports, case studies and research work with proper documentation.</p></div>
+        <div class="s-card"><div class="s-icon">✉️</div><h3>Essays & Letters</h3><p>Application letters, personal statements, essays, summaries and all other writing formats.</p></div>
+        <div class="s-card"><div class="s-icon">💻</div><h3>Online PDF Delivery</h3><p>Prefer digital? Get your solutions as a clean, formatted PDF delivered to your email.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" style="background: var(--bg2);">
+    <div class="container">
+      <div class="section-label">Transparent Pricing</div>
+      <h2 class="section-title">Simple & Affordable</h2>
+
+      <div class="timing-banner">
+        <div class="timing-dot"></div>
+        <div class="timing-text">
+          <strong>Support Hours: 9:00 AM – 7:00 PM</strong>
+          <span>Orders accepted during these hours. We respond to all queries within business hours.</span>
+        </div>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="p-card">
+          <div class="p-type">PDF Solution</div>
+          <div class="p-price"><span>₹</span>149</div>
+          <div class="p-desc">Digital delivery — clean PDF sent to your email. Perfect for quick solutions.</div>
+          <ul class="p-features">
+            <li>Upto 10 pages</li>
+            <li>PDF format delivery</li>
+            <li>Email delivery</li>
+            <li>All subjects covered</li>
+            <li>Support 9 AM – 7 PM</li>
+          </ul>
+          <button class="btn btn-outline" style="width:100%; margin-top:20px;" onclick="placeOrderFlow()">Order PDF</button>
+        </div>
+        <div class="p-card featured">
+          <div class="p-badge">Most Popular</div>
+          <div class="p-type">Hard Copy (Written)</div>
+          <div class="p-price"><span>₹</span>199</div>
+          <div class="p-desc">Handwritten physical copy delivered to your address within Mumbai.</div>
+          <ul class="p-features">
+            <li>Upto 10 pages</li>
+            <li>Physical delivery</li>
+            <li>Mumbai addresses only</li>
+            <li>Neat handwriting</li>
+            <li>₹25 per extra page</li>
+          </ul>
+          <button class="btn btn-primary" style="width:100%; margin-top:20px;" onclick="placeOrderFlow()">Order Hard Copy</button>
+        </div>
+        <div class="p-card">
+          <div class="p-type">Extra Pages</div>
+          <div class="p-price"><span>₹</span>25 <span style="font-size:16px; color:var(--text3)">/page</span></div>
+          <div class="p-desc">For work exceeding 10 pages, each additional page is charged separately.</div>
+          <ul class="p-features">
+            <li>Applies to both PDF & Hard Copy</li>
+            <li>Charged per extra page</li>
+            <li>Auto-calculated at checkout</li>
+            <li>No hidden fees</li>
+          </ul>
+          <button class="btn btn-outline" style="width:100%; margin-top:20px;" onclick="hwScrollTo('contact')">Contact Us</button>
+        </div>
+      </div>
+
+      <div style="margin-top: 28px; padding: 18px 24px; background: var(--accent3); border-radius: var(--radius); border: 1px solid rgba(200,75,17,0.2); font-size: 14px; color: var(--text2);">
+        ⚠️ <strong style="color:var(--accent)">Disclaimer:</strong> HW Solutions does not guarantee good grades or academic results from the use of our work. All solutions are provided for reference and learning purposes only. Use responsibly.
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="howitworks">
+    <div class="container">
+      <div class="section-label">Process</div>
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-sub">Four simple steps to get your homework sorted.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><h4>Sign Up & Log In</h4><p>Create your free account to access all features and place orders.</p></div>
+        <div class="step"><div class="step-num">2</div><h4>Place Your Order</h4><p>Fill in your assignment details, subject, page count and delivery preference.</p></div>
+        <div class="step"><div class="step-num">3</div><h4>Make Payment</h4><p>Pay securely via UPI. We confirm your order immediately after payment.</p></div>
+        <div class="step"><div class="step-num">4</div><h4>Get Your Solution</h4><p>Receive your written solution as PDF or hard copy at your doorstep!</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section style="background: var(--bg2);">
+    <div class="container">
+      <div class="section-label">Reviews</div>
+      <h2 class="section-title">What Students Say</h2>
+      <p class="section-sub">Real feedback from real students across Mumbai.</p>
+      <div class="review-grid">
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Submitted my assignment on time thanks to HW! The PDF was clean and well-written. Will definitely order again."</p><div class="reviewer">Priya M. <span class="reviewer-sub">— BSc Student, Mumbai</span></div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Hard copy was delivered the next day, handwriting was super neat. My teacher didn't even suspect anything was different!"</p><div class="reviewer">Rahul K. <span class="reviewer-sub">— Class 10, Andheri</span></div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><p class="review-text">"Fast response on WhatsApp. Ordered thesis help, got a well-structured draft. Just had to make small edits. Worth every rupee."</p><div class="reviewer">Ananya S. <span class="reviewer-sub">— BBA Final Year</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-box">
+          <div class="about-avatar">🎓</div>
+          <h3>By Students, For Students</h3>
+          <p>We are a group of college students from Mumbai who have lived through the pressure of deadlines, piling assignments and the struggle of managing time between studies, exams, and life.</p>
+          <div class="about-quote">"We felt the problem ourselves — so we built the solution we always wished existed."</div>
+          <div class="team-chips">
+            <span class="chip">College Students</span>
+            <span class="chip">Mumbai Based</span>
+            <span class="chip">Est. 2024</span>
+            <span class="chip">500+ Orders</span>
+          </div>
+        </div>
+        <div>
+          <div class="section-label">Our Story</div>
+          <h2 class="section-title">Why We Started HW</h2>
+          <div class="section-divider"></div>
+          <p style="font-size:15px; color:var(--text2); line-height:1.8; margin-bottom:16px;">Having been school students once and now navigating college life, we know exactly how it feels when 5 assignments pile up overnight, when you have a test tomorrow and homework due at 8 AM, or when you just don't know how to start a thesis.</p>
+          <p style="font-size:15px; color:var(--text2); line-height:1.8; margin-bottom:16px;">We tried finding help — and realized there was no trusted, affordable, student-friendly solution in our city. So we created one.</p>
+          <p style="font-size:15px; color:var(--text2); line-height:1.8; margin-bottom:28px;">HW Solutions is our way of saying: <strong style="color:var(--accent)">you don't have to go through it alone.</strong> We're fellow students — we understand your pressure, your deadlines, and your budget.</p>
+          <button class="btn btn-primary" onclick="placeOrderFlow()">Get Your Homework Done →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="background: var(--bg2);">
+    <div class="container">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-sub">Questions? Reach out during support hours: 9 AM – 7 PM.</p>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="c-icon">📧</div>
+            <div><h4>Email</h4><a href="mailto:hw.solutions@gmail.com">hw.solutions@gmail.com</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon">📞</div>
+            <div><h4>Phone / WhatsApp</h4><a href="tel:8252600663">8252600663</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon">🕐</div>
+            <div><h4>Support Hours</h4><p>Monday – Sunday, 9:00 AM – 7:00 PM</p></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon">📦</div>
+            <div><h4>Delivery Zone</h4><p>Mumbai only (Hard Copy)</p></div>
+          </div>
+          <div class="contact-item">
+            <div class="c-icon">💳</div>
+            <div><h4>UPI Payment ID</h4><p style="font-weight:600; color:var(--accent);">8252600663@ptyes</p></div>
+          </div>
+        </div>
+        <div class="contact-form-box">
+          <h3 style="font-family:var(--serif); font-size:20px; margin-bottom:20px;">Send us a message</h3>
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Enter your name"></div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>Subject</label><input type="text" placeholder="What do you need help with?"></div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Describe your assignment..."></textarea></div>
+          <button class="btn btn-primary" style="width:100%;" onclick="showToast('Message sent! We will reply within business hours.', 'success')">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="background:var(--accent);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;color:white;">hw</div>
+            <span style="font-size:16px;font-weight:700;">HW Solutions</span>
+          </div>
+          <p>Homework Solution at Your Doorstep. By students, for students — making academic life a little easier, one assignment at a time.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Services</h5>
+          <a onclick="hwScrollTo('services')">School Homework</a>
+          <a onclick="hwScrollTo('services')">College Assignments</a>
+          <a onclick="hwScrollTo('services')">Thesis Writing</a>
+          <a onclick="hwScrollTo('services')">PDF Delivery</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a onclick="hwScrollTo('about')">About Us</a>
+          <a onclick="hwScrollTo('contact')">Contact</a>
+          <a onclick="openTerms()">Terms & Conditions</a>
+          <a onclick="hwScrollTo('pricing')">Pricing</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <a>hw.solutions@gmail.com</a>
+          <a>8252600663</a>
+          <a>9 AM – 7 PM</a>
+          <a>Mumbai Only</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 HW Solutions. All rights reserved. For reference purpose only.</p>
+        <p>Made with ❤️ by Mumbai college students</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="dashboard-page" id="dashboardPage">
+  <div class="dash-header">
+    <div class="dash-header-inner">
+      <div class="dash-user">
+        <div class="user-avatar" id="dashAvatar">A</div>
+        <div>
+          <div class="user-name" id="dashName">User</div>
+          <div class="user-email" id="dashEmail">hw.solutions@gmail.com</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn btn-primary" onclick="openOrderModal()">+ New Order</button>
+        <button class="btn btn-outline" onclick="goHome()">← Back to Site</button>
+        <button class="btn btn-outline" onclick="logout()" style="color:#c00;border-color:#fcc;">Logout</button>
+      </div>
+    </div>
+  </div>
+  <div class="dash-main">
+    <div class="dash-grid">
+      <div class="dash-sidebar">
+        <div class="dash-nav">
+          <div class="dash-nav-item active" onclick="showDashPanel('overview')">📊 Overview</div>
+          <div class="dash-nav-item" onclick="showDashPanel('orders')">📋 My Orders</div>
+          <div class="dash-nav-item" onclick="showDashPanel('track')">🚚 Track Order</div>
+          <div class="dash-nav-item" onclick="showDashPanel('profile')">👤 Profile</div>
+        </div>
+        <div style="margin-top:16px;padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);">
+          <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:600;">Support</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.7;">📧 hw.solutions@gmail.com<br>📞 8252600663<br>⏰ 9 AM – 7 PM</div>
+        </div>
+      </div>
+      <div class="dash-content">
+        <!-- OVERVIEW -->
+        <div class="dash-panel active" id="panel-overview">
+          <h2 style="font-family:var(--serif);font-size:24px;margin-bottom:20px;">Welcome back! 👋</h2>
+          <div class="stats-row" id="dashStats">
+            <div class="stat-card"><div class="s-val" id="stat-total">0</div><div class="s-label">Total Orders</div></div>
+            <div class="stat-card"><div class="s-val" id="stat-pending">0</div><div class="s-label">Pending</div></div>
+            <div class="stat-card"><div class="s-val" id="stat-done">0</div><div class="s-label">Completed</div></div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:16px;">
+            <h3 style="font-size:16px;margin-bottom:14px;">Recent Orders</h3>
+            <div id="recentOrdersList"></div>
+          </div>
+        </div>
+        <!-- ORDERS -->
+        <div class="dash-panel" id="panel-orders">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+            <h2 style="font-family:var(--serif);font-size:24px;">My Orders</h2>
+            <button class="btn btn-primary" onclick="openOrderModal()">+ New Order</button>
+          </div>
+          <div class="orders-table-wrap">
+            <table class="orders-table">
+              <thead><tr><th>Order ID</th><th>Subject</th><th>Type</th><th>Pages</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody id="ordersTableBody"></tbody>
+            </table>
+            <div class="no-orders" id="noOrdersMsg" style="display:none;"><div class="big">📭</div><p>No orders yet. Place your first order!</p><button class="btn btn-primary" style="margin-top:12px;" onclick="openOrderModal()">Place Order</button></div>
+          </div>
+        </div>
+        <!-- TRACK -->
+        <div class="dash-panel" id="panel-track">
+          <h2 style="font-family:var(--serif);font-size:24px;margin-bottom:20px;">Track Your Order</h2>
+          <div style="margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap;">
+            <input type="text" id="trackInput" placeholder="Enter Order ID (e.g. HW001)" style="flex:1;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius2);font-family:var(--font);font-size:14px;color:var(--text);outline:none;">
+            <button class="btn btn-primary" onclick="trackOrder()">Track</button>
+          </div>
+          <div id="trackResult"></div>
+        </div>
+        <!-- PROFILE -->
+        <div class="dash-panel" id="panel-profile">
+          <h2 style="font-family:var(--serif);font-size:24px;margin-bottom:20px;">My Profile</h2>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;">
+            <div class="form-group"><label>Full Name</label><input type="text" id="profileName" placeholder="Your name"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="profileEmail" placeholder="your@email.com" readonly style="opacity:0.6;cursor:not-allowed;"></div>
+            <div class="form-group"><label>Phone</label><input type="tel" id="profilePhone" placeholder="Your phone number"></div>
+            <div class="form-group"><label>Default Address</label><textarea id="profileAddress" placeholder="Your delivery address..."></textarea></div>
+            <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== AUTH MODAL ===== -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Welcome to HW Solutions</h2>
+      <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tab-btns">
+        <button class="tab-btn active" onclick="switchTab('login')" id="loginTab">Log In</button>
+        <button class="tab-btn" onclick="switchTab('register')" id="registerTab">Sign Up</button>
+      </div>
+      <!-- LOGIN -->
+      <div class="tab-content active" id="loginContent">
+        <div class="error-msg" id="loginError"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="your@email.com"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="Enter password"></div>
+        <button class="btn btn-primary" style="width:100%;padding:12px;" onclick="doLogin()">Log In</button>
+        <div class="auth-divider">— or —</div>
+        <p style="font-size:13px;color:var(--text3);text-align:center;">Don't have an account? <a onclick="switchTab('register')" style="color:var(--accent);cursor:pointer;font-weight:500;">Sign Up</a></p>
+      </div>
+      <!-- REGISTER -->
+      <div class="tab-content" id="registerContent">
+        <div class="error-msg" id="regError"></div>
+        <div class="success-msg" id="regSuccess"></div>
+        <div class="form-group"><label>Full Name</label><input type="text" id="regName" placeholder="Your full name"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="your@email.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" id="regPhone" placeholder="10-digit mobile number"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="regPass" placeholder="Min 6 characters"></div>
+        <div class="form-group"><label>Confirm Password</label><input type="password" id="regPass2" placeholder="Repeat password"></div>
+        <div style="font-size:12px;color:var(--text3);margin-bottom:14px;line-height:1.6;">By signing up, you agree to our <a onclick="openTerms()" style="color:var(--accent);cursor:pointer;">Terms & Conditions</a>. Our services are for reference purposes only.</div>
+        <button class="btn btn-primary" style="width:100%;padding:12px;" onclick="doRegister()">Create Account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ORDER MODAL ===== -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal wide">
+    <div class="modal-header">
+      <h2>Place New Order</h2>
+      <button class="modal-close" onclick="closeModal('orderModal')">✕</button>
+    </div>
+    <div class="modal-body order-form">
+      <div class="error-msg" id="orderError"></div>
+      <div class="order-grid">
+        <div class="form-group"><label>Subject / Topic *</label><input type="text" id="oSubject" placeholder="e.g. Science Chapter 5"></div>
+        <div class="form-group"><label>Assignment Type *</label>
+          <select id="oType">
+            <option value="">Select type</option>
+            <option>Homework</option>
+            <option>Assignment</option>
+            <option>Thesis / Project</option>
+            <option>Essay / Letter</option>
+            <option>Lab Report</option>
+            <option>Other Writing</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Number of Pages *</label><input type="number" id="oPages" placeholder="e.g. 5" min="1" oninput="calcPrice()"></div>
+        <div class="form-group"><label>Delivery Type *</label>
+          <select id="oDelivery" onchange="calcPrice(); togglePincodeField();">
+            <option value="">Select delivery</option>
+            <option value="hardcopy">Hard Copy – ₹199 (upto 10 pages)</option>
+            <option value="pdf">PDF Online – ₹149 (upto 10 pages)</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Deadline *</label><input type="date" id="oDeadline"></div>
+        <div class="form-group"><label>Class / Level *</label><input type="text" id="oLevel" placeholder="e.g. Class 10 / BSc 2nd Year"></div>
+      </div>
+      <div class="form-group"><label>Special Instructions</label><textarea id="oNotes" placeholder="Any specific requirements, format, topics to cover..."></textarea></div>
+
+      <!-- DELIVERY ADDRESS (for hard copy) -->
+      <div id="addressSection" style="display:none;">
+        <div style="font-weight:600;font-size:14px;margin-bottom:12px;color:var(--text);">📦 Delivery Address (Mumbai Only)</div>
+        <div class="order-grid">
+          <div class="form-group"><label>Full Name *</label><input type="text" id="oName" placeholder="Recipient name"></div>
+          <div class="form-group"><label>Phone *</label><input type="tel" id="oPhone" placeholder="10-digit number"></div>
+        </div>
+        <div class="form-group"><label>Address Line *</label><input type="text" id="oAddr" placeholder="Building, Street, Area"></div>
+        <div class="order-grid">
+          <div class="form-group">
+            <label>Pincode *</label>
+            <div class="pincode-check">
+              <input type="text" id="oPincode" placeholder="e.g. 400001" maxlength="6">
+              <button class="btn btn-outline" onclick="checkPincode()">Check</button>
+            </div>
+            <div class="pincode-result" id="pincodeResult"></div>
+          </div>
+          <div class="form-group"><label>City</label><input type="text" id="oCity" value="Mumbai" readonly style="opacity:0.6;"></div>
+        </div>
+      </div>
+
+      <!-- PRICE SUMMARY -->
+      <div class="price-summary" id="priceSummary" style="display:none;">
+        <div style="font-weight:600;font-size:14px;margin-bottom:10px;">Price Summary</div>
+        <div class="price-row"><span>Base price (upto 10 pages)</span><span id="pBase">₹0</span></div>
+        <div class="price-row" id="extraRow" style="display:none;"><span>Extra pages (<span id="extraPagesNum">0</span> × ₹25)</span><span id="pExtra">₹0</span></div>
+        <div class="price-row total"><span>Total</span><span id="pTotal">₹0</span></div>
+      </div>
+
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px;padding:10px 14px;background:var(--bg3);border-radius:var(--radius2);line-height:1.6;">
+        ⚠️ By placing this order you agree to our Terms & Conditions. This service is for reference purposes only. We do not guarantee academic results.
+      </div>
+      <button class="btn btn-primary" style="width:100%;padding:14px;font-size:15px;" onclick="proceedToPayment()">Proceed to Payment →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAYMENT MODAL ===== -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Complete Payment</h2>
+      <button class="modal-close" onclick="closeModal('paymentModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-size:13px;color:var(--text3);">Order Total</div><div style="font-family:var(--serif);font-size:28px;color:var(--accent);" id="paymentAmount">₹0</div></div>
+        <div style="font-size:12px;color:var(--text3);text-align:right;">Support Hours<br>9 AM – 7 PM</div>
+      </div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:12px;">Select Payment Method</div>
+      <div class="payment-methods">
+        <div class="pay-method selected" id="pm-upi" onclick="selectPM('upi')">💳 UPI</div>
+        <div class="pay-method" id="pm-gpay" onclick="selectPM('gpay')">Google Pay</div>
+        <div class="pay-method" id="pm-phone" onclick="selectPM('phone')">PhonePe</div>
+        <div class="pay-method" id="pm-paytm" onclick="selectPM('paytm')">Paytm</div>
+      </div>
+      <div class="upi-box">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:6px;">Pay to UPI ID</div>
+        <div class="upi-id">8252600663@ptyes</div>
+        <div class="upi-hint">Or scan QR code below</div>
+        <div class="qr-box"><span style="color:#999;font-size:10px;text-align:center;">QR Code<br>(Open in UPI app)</span></div>
+        <div class="upi-hint">Name: HW Solutions</div>
+      </div>
+      <div class="payment-note">
+        1. Open your UPI / PhonePe / GPay / Paytm app<br>
+        2. Send ₹<span id="payNoteAmt">0</span> to <strong>8252600663@ptyes</strong><br>
+        3. Enter your Transaction ID below & confirm<br>
+        4. We'll process your order within business hours
+      </div>
+      <div class="form-group" style="margin-top:16px;"><label>UPI Transaction ID *</label><input type="text" id="txnId" placeholder="e.g. 123456789012"></div>
+      <button class="btn btn-green" style="width:100%;padding:13px;" onclick="confirmPayment()">✓ Confirm Payment & Place Order</button>
+      <div style="font-size:12px;color:var(--text3);margin-top:10px;text-align:center;">Payment will be verified. Order confirmed after verification.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TERMS MODAL ===== -->
+<div class="modal-overlay" id="termsModal">
+  <div class="modal wide">
+    <div class="modal-header">
+      <h2>Terms & Conditions</h2>
+      <button class="modal-close" onclick="closeModal('termsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="terms-body">
+        <p style="font-size:13px;color:var(--text3);">Last Updated: January 2025 &nbsp;|&nbsp; HW Solutions, Mumbai, India</p>
+        <div class="warning">⚠️ IMPORTANT DISCLAIMER: HW Solutions does NOT guarantee good grades, academic success, or any specific results from the use of our services. All work provided is strictly for reference and learning purposes only.</div>
+
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing or using the HW Solutions website or placing any order, you confirm that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree to these terms, do not use our services.</p>
+
+        <h3>2. Nature of Service</h3>
+        <p>HW Solutions provides written academic support materials including homework solutions, assignment drafts, thesis drafts, essays, and other writing work. All materials are provided for <strong>reference and educational purposes only</strong>. Users are responsible for how they use these materials.</p>
+
+        <h3>3. No Academic Guarantee</h3>
+        <p>HW Solutions expressly states and the user acknowledges that: (a) We do not guarantee any specific grades, marks, academic results, or academic success; (b) Our work is provided "as-is" for reference; (c) Quality of grades depends on numerous factors beyond our control including teacher evaluation, curriculum, student presentation, and more.</p>
+
+        <h3>4. User Responsibilities</h3>
+        <p>Users agree to: (a) Use our services only for lawful purposes; (b) Not misrepresent our work as entirely their own in academic submissions without proper attribution; (c) Comply with their educational institution's rules; (d) Provide accurate order details; (e) Be responsible for their academic integrity decisions.</p>
+
+        <h3>5. Pricing & Payment</h3>
+        <p>Pricing is as displayed on the website: ₹199 for written/hard copy (upto 10 pages), ₹149 for PDF (upto 10 pages), ₹25 per extra page. Payments are made via UPI to 8252600663@ptyes. Orders are confirmed after payment verification. Prices may change without prior notice.</p>
+
+        <h3>6. Refund Policy</h3>
+        <p>Refunds are considered only if: (a) Work was not delivered within the agreed timeline due to our fault; (b) Work delivered is completely irrelevant to the order. No refund will be provided if the user changes their mind after payment. Refund requests must be made within 24 hours of delivery.</p>
+
+        <h3>7. Delivery</h3>
+        <p>Hard copy delivery is available within Mumbai only. Delivery timelines are estimates and may vary. PDF delivery is made to the email address provided at registration. HW Solutions is not liable for delays caused by incorrect address information provided by the user.</p>
+
+        <h3>8. Privacy</h3>
+        <p>We collect basic user data (name, email, phone, address) for order processing purposes only. We do not sell or share user data with third parties. User data is stored securely and used only for service delivery and communication purposes.</p>
+
+        <h3>9. Intellectual Property</h3>
+        <p>Upon full payment, users receive a personal, non-transferable license to use the delivered work for personal reference. HW Solutions retains the right to use anonymized versions of work samples for portfolio and demonstration purposes. Work cannot be resold or commercially redistributed.</p>
+
+        <h3>10. Limitation of Liability</h3>
+        <p>HW Solutions' maximum liability in any case shall not exceed the amount paid by the user for the specific order in question. We are not liable for: indirect damages, academic consequences, disciplinary actions by institutions, or any losses arising from use of our work.</p>
+
+        <h3>11. Support Hours & Communication</h3>
+        <p>Customer support is available Monday to Sunday, 9:00 AM to 7:00 PM IST. Queries outside these hours will be addressed on the next business day. Response times may vary depending on order volume.</p>
+
+        <h3>12. Modifications</h3>
+        <p>HW Solutions reserves the right to modify these Terms at any time. Continued use of the service after changes constitutes acceptance of the new terms. Users will be notified of significant changes via email where possible.</p>
+
+        <h3>13. Governing Law</h3>
+        <p>These Terms shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts of Mumbai, Maharashtra.</p>
+
+        <h3>14. Contact for Legal Matters</h3>
+        <p>Email: hw.solutions@gmail.com &nbsp;|&nbsp; Phone: 8252600663 &nbsp;|&nbsp; Location: Mumbai, Maharashtra, India</p>
+
+        <div class="warning">By using HW Solutions, you confirm you are using this service for reference purposes and take full responsibility for your academic decisions. We are a group of college students providing writing assistance — not an academic consultancy or tutoring institution.</div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;margin-top:20px;" onclick="closeModal('termsModal')">I Understand & Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ====== STATE & APP VARS ======
+// ===== STATE =====
+let currentUser = null;
+let users = JSON.parse(localStorage.getItem('hw_users') || '[]');
+let orders = JSON.parse(localStorage.getItem('hw_orders') || '[]');
+let orderDraft = {};
+let selectedPM = 'upi';
+
+// ===== THEME =====
+const saved = localStorage.getItem('hw_theme') || 'light';
+document.documentElement.setAttribute('data-theme', saved);
+document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀️' : '🌙';
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('hw_theme', next);
+  document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
+}
+
+// ===== NAV =====
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+// scrollTo defined above
+
+// ===== SESSION =====
+function checkSession() {
+  const saved = localStorage.getItem('hw_session');
+  if (saved) {
+    const u = users.find(u => u.email === saved);
+    if (u) { currentUser = u; updateNavForUser(); }
+  }
+}
+function updateNavForUser() {
+  if (currentUser) {
+    document.getElementById('navAuthBtns').style.display = 'none';
+    document.getElementById('navUserBtn').style.display = 'flex';
+  } else {
+    document.getElementById('navAuthBtns').style.display = 'flex';
+    document.getElementById('navUserBtn').style.display = 'none';
+  }
+}
+
+// ===== AUTH =====
+function openAuth(tab) { openModal('authModal'); switchTab(tab); }
+function switchTab(tab) {
+  document.getElementById('loginContent').classList.toggle('active', tab === 'login');
+  document.getElementById('registerContent').classList.toggle('active', tab === 'register');
+  document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+  document.getElementById('registerTab').classList.toggle('active', tab === 'register');
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+  if (!email || !pass) { showErr(errEl, 'Please fill all fields.'); return; }
+  const u = users.find(u => u.email === email && u.pass === pass);
+  if (!u) { showErr(errEl, 'Invalid email or password.'); return; }
+  currentUser = u;
+  localStorage.setItem('hw_session', email);
+  closeModal('authModal');
+  updateNavForUser();
+  showToast('Welcome back, ' + u.name.split(' ')[0] + '!', 'success');
+}
+
+function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+  const errEl = document.getElementById('regError');
+  const sucEl = document.getElementById('regSuccess');
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
+  if (!name || !email || !phone || !pass) { showErr(errEl, 'Please fill all fields.'); return; }
+  if (pass.length < 6) { showErr(errEl, 'Password must be at least 6 characters.'); return; }
+  if (pass !== pass2) { showErr(errEl, 'Passwords do not match.'); return; }
+  if (users.find(u => u.email === email)) { showErr(errEl, 'Account with this email already exists.'); return; }
+  const newUser = { name, email, phone, pass, address: '', joinDate: new Date().toLocaleDateString() };
+  users.push(newUser);
+  localStorage.setItem('hw_users', JSON.stringify(users));
+  currentUser = newUser;
+  localStorage.setItem('hw_session', email);
+  sucEl.textContent = 'Account created! Logging you in...';
+  sucEl.style.display = 'block';
+  setTimeout(() => { closeModal('authModal'); updateNavForUser(); showToast('Welcome to HW Solutions, ' + name.split(' ')[0] + '!', 'success'); }, 1200);
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('hw_session');
+  updateNavForUser();
+  goHome();
+  showToast('Logged out successfully.');
+}
+
+// ===== DASHBOARD =====
+function showDashboard() {
+  if (!currentUser) { openAuth('login'); return; }
+  document.getElementById('mainSite').style.display = 'none';
+  document.getElementById('dashboardPage').classList.add('active');
+  window.scrollTo(0,0);
+  const initials = currentUser.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('dashAvatar').textContent = initials;
+  document.getElementById('dashName').textContent = currentUser.name;
+  document.getElementById('dashEmail').textContent = currentUser.email;
+  document.getElementById('profileName').value = currentUser.name;
+  document.getElementById('profileEmail').value = currentUser.email;
+  document.getElementById('profilePhone').value = currentUser.phone || '';
+  document.getElementById('profileAddress').value = currentUser.address || '';
+  loadOrders();
+}
+function goHome() {
+  document.getElementById('mainSite').style.display = '';
+  document.getElementById('dashboardPage').classList.remove('active');
+}
+function showDashPanel(name) {
+  document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.dash-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'orders') renderOrdersTable();
+  if (name === 'overview') updateStats();
+}
+
+function loadOrders() { updateStats(); renderOrdersTable(); renderRecentOrders(); }
+
+function myOrders() {
+  return orders.filter(o => o.userEmail === currentUser.email);
+}
+
+function updateStats() {
+  const mine = myOrders();
+  document.getElementById('stat-total').textContent = mine.length;
+  document.getElementById('stat-pending').textContent = mine.filter(o => o.status === 'Pending' || o.status === 'Processing').length;
+  document.getElementById('stat-done').textContent = mine.filter(o => o.status === 'Completed' || o.status === 'Delivered').length;
+}
+
+function renderRecentOrders() {
+  const mine = myOrders().slice(-3).reverse();
+  const el = document.getElementById('recentOrdersList');
+  if (!mine.length) { el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);">No orders yet.</div>'; return; }
+  el.innerHTML = mine.map(o => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border2);flex-wrap:wrap;gap:6px;">
+      <div><div style="font-size:14px;font-weight:500;">${o.subject}</div><div style="font-size:12px;color:var(--text3);">${o.id} · ${o.date}</div></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span style="font-weight:600;color:var(--accent);">₹${o.amount}</span><span class="status-badge status-${o.status.toLowerCase()}">${o.status}</span></div>
+    </div>`).join('');
+}
+
+function renderOrdersTable() {
+  const mine = myOrders().reverse();
+  const tb = document.getElementById('ordersTableBody');
+  const nm = document.getElementById('noOrdersMsg');
+  if (!mine.length) { tb.innerHTML = ''; nm.style.display = ''; return; }
+  nm.style.display = 'none';
+  tb.innerHTML = mine.map(o => `
+    <tr>
+      <td style="font-weight:500;color:var(--accent);">${o.id}</td>
+      <td>${o.subject}</td>
+      <td>${o.type}</td>
+      <td>${o.pages}</td>
+      <td style="font-weight:600;">₹${o.amount}</td>
+      <td><span class="status-badge status-${o.status.toLowerCase()}">${o.status}</span></td>
+      <td style="color:var(--text3);">${o.date}</td>
+    </tr>`).join('');
+}
+
+function trackOrder() {
+  const id = document.getElementById('trackInput').value.trim().toUpperCase();
+  const el = document.getElementById('trackResult');
+  if (!id) { el.innerHTML = '<div style="color:var(--accent);font-size:14px;">Please enter an Order ID.</div>'; return; }
+  const order = myOrders().find(o => o.id === id);
+  if (!order) { el.innerHTML = `<div class="track-box"><p style="color:var(--text2);">No order found with ID <strong>${id}</strong>. Check your order ID in My Orders tab.</p></div>`; return; }
+  const steps = [
+    { label: 'Order Placed', desc: 'Your order was received', done: true },
+    { label: 'Payment Verified', desc: 'Payment confirmed', done: order.status !== 'Pending' },
+    { label: 'Being Prepared', desc: 'Solution being written', done: order.status === 'Processing' || order.status === 'Completed' || order.status === 'Delivered' },
+    { label: 'Completed / Dispatched', desc: order.delivery === 'pdf' ? 'PDF sent to email' : 'Hard copy dispatched', done: order.status === 'Completed' || order.status === 'Delivered' },
+    { label: 'Delivered', desc: 'Solution delivered!', done: order.status === 'Delivered' },
+  ];
+  el.innerHTML = `<div class="track-box">
+    <div style="display:flex;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px;">
+      <div><div style="font-weight:700;font-size:16px;">${order.id}</div><div style="color:var(--text3);font-size:13px;">${order.subject} · ${order.date}</div></div>
+      <div><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></div>
+    </div>
+    <div class="track-steps">${steps.map(s => `<div class="track-step${s.done ? ' done' : ''}"><h5>${s.label}</h5><p>${s.desc}</p></div>`).join('')}</div>
+  </div>`;
+}
+
+function saveProfile() {
+  if (!currentUser) return;
+  currentUser.name = document.getElementById('profileName').value.trim() || currentUser.name;
+  currentUser.phone = document.getElementById('profilePhone').value.trim();
+  currentUser.address = document.getElementById('profileAddress').value.trim();
+  const idx = users.findIndex(u => u.email === currentUser.email);
+  if (idx > -1) users[idx] = currentUser;
+  localStorage.setItem('hw_users', JSON.stringify(users));
+  document.getElementById('dashName').textContent = currentUser.name;
+  showToast('Profile updated!', 'success');
+}
+
+// ===== ORDER FLOW =====
+function placeOrderFlow() {
+  if (!currentUser) { openAuth('login'); showToast('Please log in to place an order.'); return; }
+  openModal('orderModal');
+  const today = new Date(); today.setDate(today.getDate() + 1);
+  document.getElementById('oDeadline').min = today.toISOString().split('T')[0];
+  calcPrice();
+}
+
+function togglePincodeField() {
+  const delivery = document.getElementById('oDelivery').value;
+  const addrSec = document.getElementById('addressSection');
+  addrSec.style.display = delivery === 'hardcopy' ? '' : 'none';
+}
+
+function calcPrice() {
+  const pages = parseInt(document.getElementById('oPages').value) || 0;
+  const delivery = document.getElementById('oDelivery').value;
+  const sumEl = document.getElementById('priceSummary');
+  if (!pages || !delivery) { sumEl.style.display = 'none'; return; }
+  sumEl.style.display = '';
+  const base = delivery === 'hardcopy' ? 199 : 149;
+  const extra = Math.max(0, pages - 10) * 25;
+  const total = base + extra;
+  document.getElementById('pBase').textContent = '₹' + base;
+  const extraRow = document.getElementById('extraRow');
+  if (extra > 0) {
+    extraRow.style.display = 'flex';
+    document.getElementById('extraPagesNum').textContent = pages - 10;
+    document.getElementById('pExtra').textContent = '₹' + extra;
+  } else { extraRow.style.display = 'none'; }
+  document.getElementById('pTotal').textContent = '₹' + total;
+}
+
+const MUMBAI_PINCODES = ['400001','400002','400003','400004','400005','400006','400007','400008','400009','400010','400011','400012','400013','400014','400015','400016','400017','400018','400019','400020','400021','400022','400023','400024','400025','400026','400027','400028','400029','400030','400031','400032','400033','400034','400035','400036','400037','400038','400039','400040','400041','400042','400043','400044','400045','400046','400047','400048','400049','400050','400051','400052','400053','400054','400055','400056','400057','400058','400059','400060','400061','400062','400063','400064','400065','400066','400067','400068','400069','400070','400071','400072','400073','400074','400075','400076','400077','400078','400079','400080','400081','400082','400083','400084','400085','400086','400087','400088','400089','400090','400091','400092','400093','400094','400095','400096','400097','400098','400099','400101','400102','400103','400104','400601','400602','400603','400604','400605','400606','400607','400608','400609','400610','400611','400612','400613','400614','400615','400616','400617','400618','400619','400620','400701','400702','400703','400704','400705','400706','400707','400708','400709','400710'];
+
+function checkPincode() {
+  const pin = document.getElementById('oPincode').value.trim();
+  const el = document.getElementById('pincodeResult');
+  el.style.display = '';
+  if (pin.length !== 6) { el.className = 'pincode-result pincode-fail'; el.textContent = 'Please enter a valid 6-digit pincode.'; return; }
+  if (MUMBAI_PINCODES.includes(pin)) {
+    el.className = 'pincode-result pincode-ok'; el.textContent = '✓ Great! We deliver to this pincode.';
+  } else {
+    el.className = 'pincode-result pincode-fail'; el.textContent = '✗ Sorry, we can\'t deliver at your location right now, but we\'re trying to get there soon!';
+  }
+}
+
+function proceedToPayment() {
+  const subject = document.getElementById('oSubject').value.trim();
+  const type = document.getElementById('oType').value;
+  const pages = parseInt(document.getElementById('oPages').value);
+  const delivery = document.getElementById('oDelivery').value;
+  const deadline = document.getElementById('oDeadline').value;
+  const level = document.getElementById('oLevel').value.trim();
+  const errEl = document.getElementById('orderError');
+  errEl.style.display = 'none';
+
+  if (!subject || !type || !pages || !delivery || !deadline || !level) { showErr(errEl, 'Please fill all required fields.'); return; }
+  if (pages < 1) { showErr(errEl, 'Pages must be at least 1.'); return; }
+
+  if (delivery === 'hardcopy') {
+    const name = document.getElementById('oName').value.trim();
+    const phone = document.getElementById('oPhone').value.trim();
+    const addr = document.getElementById('oAddr').value.trim();
+    const pin = document.getElementById('oPincode').value.trim();
+    if (!name || !phone || !addr || !pin) { showErr(errEl, 'Please fill all delivery address fields.'); return; }
+    if (pin.length !== 6) { showErr(errEl, 'Please enter a valid pincode.'); return; }
+    if (!MUMBAI_PINCODES.includes(pin)) {
+      showErr(errEl, '✗ Sorry, we can\'t deliver at your location right now, but we\'re trying to get there soon!'); return;
+    }
+  }
+
+  const base = delivery === 'hardcopy' ? 199 : 149;
+  const extra = Math.max(0, pages - 10) * 25;
+  const total = base + extra;
+
+  orderDraft = {
+    subject, type, pages, delivery, deadline, level,
+    notes: document.getElementById('oNotes').value.trim(),
+    amount: total,
+    deliveryName: delivery === 'hardcopy' ? document.getElementById('oName').value.trim() : '',
+    deliveryPhone: delivery === 'hardcopy' ? document.getElementById('oPhone').value.trim() : '',
+    deliveryAddr: delivery === 'hardcopy' ? document.getElementById('oAddr').value.trim() : '',
+    deliveryPin: delivery === 'hardcopy' ? document.getElementById('oPincode').value.trim() : '',
+  };
+
+  closeModal('orderModal');
+  document.getElementById('paymentAmount').textContent = '₹' + total;
+  document.getElementById('payNoteAmt').textContent = total;
+  openModal('paymentModal');
+}
+
+function selectPM(id) {
+  selectedPM = id;
+  document.querySelectorAll('.pay-method').forEach(el => el.classList.remove('selected'));
+  document.getElementById('pm-' + id).classList.add('selected');
+}
+
+function confirmPayment() {
+  const txn = document.getElementById('txnId').value.trim();
+  if (!txn) { showToast('Please enter your UPI Transaction ID.', 'error'); return; }
+  const oid = 'HW' + String(orders.length + 1).padStart(3, '0');
+  const newOrder = {
+    id: oid,
+    userEmail: currentUser.email,
+    subject: orderDraft.subject,
+    type: orderDraft.type,
+    pages: orderDraft.pages,
+    delivery: orderDraft.delivery,
+    deadline: orderDraft.deadline,
+    level: orderDraft.level,
+    notes: orderDraft.notes,
+    amount: orderDraft.amount,
+    txnId: txn,
+    status: 'Pending',
+    date: new Date().toLocaleDateString('en-IN'),
+    address: orderDraft.delivery === 'hardcopy' ? `${orderDraft.deliveryName}, ${orderDraft.deliveryAddr}, ${orderDraft.deliveryPin}` : 'PDF - ' + currentUser.email,
+  };
+  orders.push(newOrder);
+  localStorage.setItem('hw_orders', JSON.stringify(orders));
+  document.getElementById('txnId').value = '';
+  closeModal('paymentModal');
+  showDashboard();
+  showDashPanel2('orders');
+  showToast('🎉 Order placed! ID: ' + oid + '. We\'ll verify payment and start working.', 'success');
+}
+
+function showDashPanel2(name) {
+  document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.dash-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.querySelector(`.dash-nav-item:nth-child(${name==='overview'?1:name==='orders'?2:name==='track'?3:4})`).classList.add('active');
+  renderOrdersTable(); updateStats();
+}
+
+function openOrderModal() { openModal('orderModal'); togglePincodeField(); calcPrice(); }
+
+// ===== MODALS =====
+function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
+function openTerms() { openModal('termsModal'); }
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+});
+
+// ===== HELPERS =====
+function showErr(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' ' + type : '') + ' show';
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+
+// ====== SCROLL & ANIMATION ======
+// ====== SMOOTH SCROLL ANIMATIONS ======
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => observer.observe(el));
+}
+
+// Navbar scroll effect + active section highlight
+function initNavScroll() {
+  const navbar = document.querySelector('.navbar');
+  const sections = ['services','pricing','about','howitworks','contact'];
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    // scrolled shadow
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+
+    // active section
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('nav-active');
+      const onclick = a.getAttribute('onclick') || '';
+      if (current && onclick.includes(current)) a.classList.add('nav-active');
+    });
+  }, { passive: true });
+}
+
+// Smooth scrollTo override with offset
+function hwScrollTo(id) {
+  goHome();
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }, 10);
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+// Add reveal classes to elements after DOM load
+function addRevealClasses() {
+  // Hero already has CSS animation
+
+  // Section labels, titles
+  document.querySelectorAll('.section-label').forEach((el, i) => el.classList.add('reveal'));
+  document.querySelectorAll('.section-title').forEach(el => el.classList.add('reveal'));
+  document.querySelectorAll('.section-sub').forEach(el => { el.classList.add('reveal'); el.classList.add('delay-1'); });
+  document.querySelectorAll('.section-divider').forEach(el => el.classList.add('reveal'));
+
+  // Service cards with stagger
+  document.querySelectorAll('.s-card').forEach((el, i) => {
+    el.classList.add('reveal');
+    el.classList.add('delay-' + Math.min(i + 1, 6));
+  });
+
+  // Pricing cards
+  document.querySelectorAll('.p-card').forEach((el, i) => {
+    el.classList.add('reveal-scale');
+    el.classList.add('delay-' + (i + 1));
+  });
+
+  // Steps
+  document.querySelectorAll('.step').forEach((el, i) => {
+    el.classList.add('reveal');
+    el.classList.add('delay-' + (i + 1));
+  });
+
+  // About grid
+  const aboutGrid = document.querySelector('.about-grid');
+  if (aboutGrid) {
+    const children = aboutGrid.children;
+    if (children[0]) children[0].classList.add('reveal-left');
+    if (children[1]) children[1].classList.add('reveal-right');
+  }
+
+  // Contact grid
+  const contactGrid = document.querySelector('.contact-grid');
+  if (contactGrid) {
+    const children = contactGrid.children;
+    if (children[0]) children[0].classList.add('reveal-left');
+    if (children[1]) children[1].classList.add('reveal-right');
+  }
+
+  // Timing banner
+  const tb = document.querySelector('.timing-banner');
+  if (tb) tb.classList.add('reveal');
+
+  // Review cards
+  document.querySelectorAll('.review-card').forEach((el, i) => {
+    el.classList.add('reveal');
+    el.classList.add('delay-' + (i + 1));
+  });
+
+  // Hero stats
+  document.querySelectorAll('.stat-box').forEach((el, i) => {
+    el.classList.add('reveal-scale');
+    el.classList.add('delay-' + (i + 1));
+  });
+
+  // Contact items
+  document.querySelectorAll('.contact-item').forEach((el, i) => {
+    el.classList.add('reveal');
+    el.classList.add('delay-' + (i + 1));
+  });
+}
+
+// ====== INIT ON DOM READY ======
+document.addEventListener('DOMContentLoaded', () => {
+  checkSession();
+  addRevealClasses();
+  initReveal();
+  initNavScroll();
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  const minD = tomorrow.toISOString().split('T')[0];
+  const dl = document.getElementById('oDeadline');
+  if (dl) dl.min = minD;
+});
+
+</script>
+</body>
+</html>
